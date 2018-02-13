@@ -6,11 +6,18 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 
+
 public class SearchActivity extends AppCompatActivity {
 
+    // Login variables
     private Button mLoginButton;
-
     private static final int REQUEST_CODE_LOGIN = 0;
+
+    // Mock ingredients variables
+    private String[] ingredientsGrillCheese = {"Cheese", "Ham"};
+    private String[] ingredientsHotDog = {"Ketchup", "Fried Onion", "Mustard"};
+    private String[] ingredientsPasta = {"Pasta", "Pepperoni", "Ham", "Carrots", "Bacon"};
+    private String[] ingredientsCocoPuffs = {"Coco Puffs", "Milk"};
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -41,6 +48,9 @@ public class SearchActivity extends AppCompatActivity {
             }
         };
 
-
+        recipeSearchMock GrillCheese = new recipeSearchMock("Grill Cheese", ingredientsGrillCheese);
+        recipeSearchMock HotDog = new recipeSearchMock("Hot Dog", ingredientsHotDog);
+        recipeSearchMock Pasta = new recipeSearchMock("Pasta", ingredientsPasta);
+        recipeSearchMock CocoPuffs = new recipeSearchMock("Coco Puffs", ingredientsCocoPuffs);
     }
 }
