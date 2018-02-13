@@ -68,22 +68,6 @@ public class SearchActivity extends AppCompatActivity {
             }
         };
         showRecipe.setOnClickListener(listener);
-      
-        mLoginButton = findViewById(R.id.login_button);
-        mLoginButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                //Start LoginActivity
-                mLoginButton.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View view) {
-                        Intent intent = LoginActivity.newIntent(SearchActivity.this);
-
-                        startActivityForResult(intent, REQUEST_CODE_LOGIN);
-                    }
-                });
-            }
-        });
 
         recipeSearchMock GrillCheese = new recipeSearchMock("Grill Cheese", ingredientsGrillCheese);
         recipeSearchMock HotDog = new recipeSearchMock("Hot Dog", ingredientsHotDog);
