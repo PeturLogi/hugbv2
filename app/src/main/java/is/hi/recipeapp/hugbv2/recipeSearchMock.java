@@ -1,3 +1,5 @@
+package is.hi.recipeapp.hugbv2;
+
 /**
  * Created by gunnarmarhardarson on 12/02/2018.
  */
