@@ -1,5 +1,7 @@
 package is.hi.recipeapp.hugbv2;
 
+
+
 import android.graphics.Bitmap;
 
 /**
@@ -10,11 +12,13 @@ public class recipeSearchMock {
 
     private String name;
     private String[] ingredients;
+
     // private Bitmap bitmap;
 
     public recipeSearchMock(String name, String[] ingredients) {
         this.name = name;
         this.ingredients = ingredients;
+
        // this.bitmap = bitmap;
     }
 
