@@ -81,7 +81,7 @@ public class SearchActivity extends AppCompatActivity {
             return true;
         }
 
-
+/*
         showRecipe = findViewById(R.id.showRecipe);
         listView = (ListView) findViewById(R.id.listView);
         listItems = new ArrayList<String>();
@@ -113,10 +113,8 @@ public class SearchActivity extends AppCompatActivity {
         allRecipies.add(HotDog);
         allRecipies.add(Pasta);
         allRecipies.add(CocoPuffs);
+*/
 
-        //for (int i = 0; i < allRecipies.size(); i++) {
-        //    Log.i(i.toString());
-        //}
     }
 }
 

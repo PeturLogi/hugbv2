@@ -83,16 +83,22 @@ public class LoginActivity extends AppCompatActivity {
                 new Runnable() {
                     public void run() {
                         // Checks if email and password exist in database/mockdatabase
+                        boolean token = false;
                         for (String credential : DUMMY_CREDENTIALS) {
                             String[] pieces = credential.split(":");
                             if (pieces[0].equals(email)) {
                                 if(pieces[1].equals(password)) {
-                                    onLoginSuccess();
+                                    token = true;
                                 }
-                                onLoginFailed();
                             }
                         }
-                        onLoginFailed();
+
+                        if (token) {
+                            onLoginSuccess();
+                        } else {
+                            onLoginFailed();
+                        }
+
                         //onLoginSuccess();
                         // onLoginFailed();
                         progressDialog.dismiss();
