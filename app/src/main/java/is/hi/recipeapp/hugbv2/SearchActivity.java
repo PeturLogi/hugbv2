@@ -8,15 +8,15 @@ import android.view.GestureDetector;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.WindowManager;
-import android.widget.ArrayAdapter;
+import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.ListView;
-import android.util.Log;
 import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Collections;
+
+import android.widget.Toast;
+
 
 import static android.R.layout.simple_list_item_2;
 
@@ -25,12 +25,12 @@ public class SearchActivity extends AppCompatActivity {
     private CheckBox checkBoxCheese, checkBoxHam, checkBoxPasta;
     private Button showRecipe;
     private ListView listView;
-    ArrayAdapter<String> adapter;
+    ArrayList<String> t = new ArrayList<>();
+    CustomListAdapter adapter;
+    //ArrayAdapter<String> adapter;
     EditText editText;
 
     // Login variables
-    private Button mLoginButton;
-    private static final int REQUEST_CODE_LOGIN = 0;
     private GestureDetectorCompat gestureObject;
 
 
@@ -71,35 +71,28 @@ public class SearchActivity extends AppCompatActivity {
         allRecipies.add(Pasta);
         allRecipies.add(CocoPuffs);
 
-
-        ArrayList<String> temp = new ArrayList<>();
-        ArrayList<String> tempIngred = new ArrayList<>();
-
-        for ( recipeSearchMock recipe : allRecipies ) {
-            Collections.addAll(tempIngred, recipe.getIngredients());
-            if(checkBoxPasta.isSelected()) {
-                
-            }
+        for (recipeSearchMock item : allRecipies) {
+            t.add(item.getName());
         }
 
-        /*
-        for ( recipeSearchMock recipe : allRecipies ) {
-            temp.add(recipe.getName());
-        }
-         */
-
-        adapter = new ArrayAdapter<String>(this,
-                android.R.layout.simple_list_item_1, temp);
-
-
-        // Listener to view all recipies
-        View.OnClickListener listener = new View.OnClickListener() {
+        adapter = new CustomListAdapter(this, t, R.drawable.cashking);
+        showRecipe.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                listView = (ListView) findViewById(R.id.listView);
                 listView.setAdapter(adapter);
             }
-        };
-        showRecipe.setOnClickListener(listener);
+        });
+
+
+        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view,
+                                    int position, long id) {
+                String selectedItem = t.get(position);
+                Toast.makeText(getApplicationContext(), selectedItem, Toast.LENGTH_SHORT).show();
+            }
+        });
     }
 
     @Override
