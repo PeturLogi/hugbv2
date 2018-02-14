@@ -25,38 +25,37 @@
         android:orientation="vertical">
 
         <CheckBox
-            android:id="@+id/checkBoxfish"
+            android:id="@+id/checkBoxPasta"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_alignStart="@+id/checkBoxBeef"
-            android:layout_below="@+id/checkBoxBeef"
+            android:layout_alignStart="@+id/checkBoxHam"
+            android:layout_below="@+id/checkBoxHam"
             android:layout_marginTop="50dp"
-            android:text="fish" />
+            android:text="Pasta" />
 
         <CheckBox
-            android:id="@+id/checkBoxBeef"
+            android:id="@+id/checkBoxHam"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_alignStart="@+id/checkBoxChicken"
-            android:layout_below="@+id/checkBoxChicken"
+            android:layout_alignStart="@+id/checkBoxCheese"
+            android:layout_below="@+id/checkBoxCheese"
             android:layout_marginTop="0dp"
-            android:text="Beef" />
+            android:text="Ham" />
 
         <CheckBox
-            android:id="@+id/checkBoxChicken"
+            android:id="@+id/checkBoxCheese"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_alignParentStart="true"
             android:layout_alignParentTop="true"
             android:layout_marginTop="0dp"
-            android:text="chicken" />
+            android:text="Cheese" />
     </LinearLayout>
 
     <Button
         android:id="@+id/showRecipe"
         android:layout_width="130dp"
         android:layout_height="50dp"
-        android:layout_alignTop="@+id/checkBoxfish"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="170dp"
         android:text="Search"
@@ -68,7 +67,6 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_alignParentStart="true"
-        android:layout_below="@+id/checkBoxfish"
         android:layout_marginTop="250dp"/>
 
 </RelativeLayout>
