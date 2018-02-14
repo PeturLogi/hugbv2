@@ -69,6 +69,6 @@
         android:layout_height="match_parent"
         android:layout_alignParentStart="true"
         android:layout_below="@+id/checkBoxfish"
-        android:layout_marginTop="250dp" />
+        android:layout_marginTop="250dp"/>
 
 </RelativeLayout>
