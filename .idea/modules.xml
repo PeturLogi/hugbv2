@@ -4,6 +4,7 @@
     <modules>
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
       <module fileurl="file://$PROJECT_DIR$/hbv2Git.iml" filepath="$PROJECT_DIR$/hbv2Git.iml" />
+      <module fileurl="file://$PROJECT_DIR$/hugbv2.iml" filepath="$PROJECT_DIR$/hugbv2.iml" />
     </modules>
   </component>
 </project>

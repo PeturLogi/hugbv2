@@ -1,18 +1,57 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context="is.hi.recipeapp.hugbv2.SearchActivity">
 
-    <TextView
+    <Button
+        android:id="@+id/showRecipe"
+        android:layout_width="130dp"
+        android:layout_height="67dp"
+        android:layout_alignParentEnd="true"
+        android:layout_below="@+id/checkBoxChicken"
+        android:layout_marginEnd="32dp"
+        android:text="LeitUppskrift"
+        tools:layout_editor_absoluteX="127dp"
+        tools:layout_editor_absoluteY="202dp" />
+
+    <CheckBox
+        android:id="@+id/checkBoxChicken"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Blessaður karl"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintHorizontal_bias="0.501"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-</android.support.constraint.ConstraintLayout>
+
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginStart="38dp"
+        android:layout_marginTop="38dp"
+        android:text="chicken" />
+
+    <CheckBox
+        android:id="@+id/checkBoxBeef"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignStart="@+id/checkBoxChicken"
+        android:layout_below="@+id/checkBoxChicken"
+        android:layout_marginTop="23dp"
+        android:text="Beef" />
+
+    <CheckBox
+        android:id="@+id/checkBoxfish"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignStart="@+id/checkBoxBeef"
+        android:layout_below="@+id/checkBoxBeef"
+        android:layout_marginTop="33dp"
+        android:text="fish" />
+
+    <ListView
+        android:id="@+id/listView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_alignParentStart="true"
+        android:layout_below="@+id/checkBoxfish"
+        android:layout_marginTop="53dp" />
+
+</RelativeLayout>
