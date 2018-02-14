@@ -29,7 +29,7 @@ public class LoginActivity extends AppCompatActivity {
      */
     private static final String[] DUMMY_CREDENTIALS = new String[] {
             "foo@example.com:hello", "bar@example.com:world", "hopur6@hi.is:hopur6",
-            "testmail@gmail.com:TestPassWord123"
+            "testmail@gmail.com:TestPassWord123", "a@a.a:aaaa"
     };
 
     @Override
