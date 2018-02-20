@@ -26,6 +26,7 @@
             android:name=".SearchActivity"
             android:label="@string/title_activity_login" />
         <activity android:name=".SignupActivity"></activity>
+        <activity android:name=".AdminLogin"></activity>
     </application>
 
 </manifest>
