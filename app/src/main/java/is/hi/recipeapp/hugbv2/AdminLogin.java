@@ -21,7 +21,7 @@ public class AdminLogin extends AppCompatActivity {
     @BindView(R.id.input_email) EditText _emailText;
     @BindView(R.id.input_password) EditText _passwordText;
     @BindView(R.id.btn_login) Button _loginButton;
-    @BindView(R.id.link_signup) TextView _signupLink;
+    @BindView(R.id.link_signup1) TextView _signupLink1;
 
     /**
      * A dummy authentication store containing known user names and passwords.
@@ -45,12 +45,12 @@ public class AdminLogin extends AppCompatActivity {
             }
         });
 
-        _signupLink.setOnClickListener(new View.OnClickListener() {
+        _signupLink1.setOnClickListener(new View.OnClickListener() {
 
             @Override
             public void onClick(View v) {
                 // Start the Signup activity
-                Intent intent = new Intent(getApplicationContext(), SignupActivity.class);
+                Intent intent = new Intent(getApplicationContext(), LoginActivity.class);
                 startActivityForResult(intent, REQUEST_SIGNUP);
                 finish();
                 overridePendingTransition(R.anim.push_left_in, R.anim.push_left_out);
@@ -128,7 +128,7 @@ public class AdminLogin extends AppCompatActivity {
         _loginButton.setEnabled(true);
         Toast.makeText(getBaseContext(), "Login successful", Toast.LENGTH_LONG).show();
 
-        Intent intent = new Intent(AdminLogin.this, SearchActivity.class);
+        Intent intent = new Intent(AdminLogin.this, AdminPage.class);
         finish();
         startActivity(intent);
     }
