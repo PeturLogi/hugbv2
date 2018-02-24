@@ -27,6 +27,7 @@
             android:label="@string/title_activity_login" />
         <activity android:name=".SignupActivity" />
         <activity android:name=".AdminLogin" />
+        <activity android:name=".AdminPage" />
         <activity
             android:name=".MyShoppingList"
             android:label="MyShoppingList"
