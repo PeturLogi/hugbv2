@@ -27,7 +27,6 @@ public class SearchActivity extends AppCompatActivity {
     private CheckBox checkBoxCheese, checkBoxHam, checkBoxPasta;
     private Button showRecipe;
     private ListView listView;
-    ArrayList<String> t = new ArrayList<>();
     CustomListAdapter adapter;
     //ArrayAdapter<String> adapter;
     EditText editText;
@@ -45,6 +44,7 @@ public class SearchActivity extends AppCompatActivity {
 
     // ArrayLists
     ArrayList<recipeSearchMock> allRecipies = new ArrayList<>();
+    ArrayList<String> temp = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -73,14 +73,39 @@ public class SearchActivity extends AppCompatActivity {
         allRecipies.add(Pasta);
         allRecipies.add(CocoPuffs);
 
-        for (recipeSearchMock item : allRecipies) {
-            t.add(item.getName());
-        }
 
-        adapter = new CustomListAdapter(this, t, R.drawable.cashking);
+
+
+        adapter = new CustomListAdapter(this, temp, R.drawable.cashking);
+
         showRecipe.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+
+                ArrayList<String> chosenIngred = new ArrayList<>();
+
+                if (checkBoxPasta.isChecked()) {
+                    chosenIngred.add("pasta");
+                }
+                if (checkBoxCheese.isChecked()) {
+                    chosenIngred.add("cheese");
+                }
+                if (checkBoxHam.isChecked()) {
+                    chosenIngred.add("ham");
+                }
+
+                ArrayList<recipeSearchMock> queried = new ArrayList<>();
+                if (chosenIngred.isEmpty()) {
+                    queried = allRecipies;
+                } else {
+                    queried = queryIngredients(chosenIngred);
+                }
+
+                temp.clear();
+                for (recipeSearchMock item : queried) {
+                    temp.add(item.getName());
+                }
+
                 listView = (ListView) findViewById(R.id.listView);
                 listView.setAdapter(adapter);
             }
@@ -91,10 +116,43 @@ public class SearchActivity extends AppCompatActivity {
             @Override
             public void onItemClick(AdapterView<?> parent, View view,
                                     int position, long id) {
-                String selectedItem = t.get(position);
+                String selectedItem = temp.get(position);
                 Toast.makeText(getApplicationContext(), selectedItem, Toast.LENGTH_SHORT).show();
             }
         });
+    }
+
+    private ArrayList<recipeSearchMock> queryIngredients(ArrayList<String> chosenIngred) {
+        ArrayList<recipeSearchMock> possibleMatch = new ArrayList<>();
+        ArrayList<recipeSearchMock> t = new ArrayList<>();
+        for (recipeSearchMock recipe : allRecipies) {
+            for (String recipeIngred : recipe.getIngredients()) {
+                if (recipeIngred.equalsIgnoreCase(chosenIngred.get(0))) {
+                    possibleMatch.add(recipe);
+                }
+            }
+        }
+
+        if (chosenIngred.size() > 1) {
+            for (int i = 1; i < chosenIngred.size(); i++) {
+                for (recipeSearchMock recipe : possibleMatch) {
+                    boolean token = true;
+                    for (String recipeIngred : recipe.getIngredients()) {
+                        if (recipeIngred.equalsIgnoreCase(chosenIngred.get(i))) {
+                            token = false;
+                        }
+                    }
+                    if (token) {
+                        possibleMatch.remove(recipe);
+                    }
+                }
+            }
+        }
+        if (possibleMatch.size() == 0) {
+            return allRecipies;
+        } else {
+            return possibleMatch;
+        }
     }
 
     @Override
