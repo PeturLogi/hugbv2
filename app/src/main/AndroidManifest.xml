@@ -31,7 +31,8 @@
         <activity
             android:name=".MyShoppingList"
             android:label="MyShoppingList"
-            android:theme="@style/AppTheme.NoActionBar"></activity>
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity android:name=".AboutActivity"></activity>
     </application>
 
 </manifest>
