@@ -117,7 +117,8 @@ public class SearchActivity extends AppCompatActivity {
             public void onItemClick(AdapterView<?> parent, View view,
                                     int position, long id) {
                 String selectedItem = temp.get(position);
-                Toast.makeText(getApplicationContext(), selectedItem, Toast.LENGTH_SHORT).show();
+                // Toast.makeText(getApplicationContext(), selectedItem, Toast.LENGTH_SHORT).show();
+                startActivity(new Intent(SearchActivity.this, AboutActivity.class));
             }
         });
     }
