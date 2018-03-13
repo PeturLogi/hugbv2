@@ -1,4 +1,4 @@
-package is.hi.recipeapp.hugbv2;
+package is.hi.recipeapp.hugbv2.ui;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -26,6 +26,8 @@ import android.widget.Toast;
 import android.widget.AdapterView;
 import android.widget.TextView;
 import android.view.View;
+
+import is.hi.recipeapp.hugbv2.R;
 
 public class MyShoppingList extends AppCompatActivity {
 

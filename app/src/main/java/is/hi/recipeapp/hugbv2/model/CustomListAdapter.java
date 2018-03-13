@@ -1,4 +1,4 @@
-package is.hi.recipeapp.hugbv2;
+package is.hi.recipeapp.hugbv2.model;
 
 import android.app.Activity;
 import android.view.LayoutInflater;
@@ -11,18 +11,20 @@ import android.widget.TextView;
 import java.lang.reflect.Array;
 import java.util.ArrayList;
 
-public class CustomListAdapter extends ArrayAdapter<String> {
+import is.hi.recipeapp.hugbv2.R;
+
+public class CustomListAdapter extends ArrayAdapter<Matches> {
 
     private final Activity context;
-    private final ArrayList<String> itemname;
+    private final ArrayList<Matches> items;
     private final Integer imgid;
 
-    public CustomListAdapter(Activity context, ArrayList<String> itemname, Integer imgid) {
-        super(context, R.layout.mylist, itemname);
+    public CustomListAdapter(Activity context, ArrayList<Matches> items, Integer imgid) {
+        super(context, R.layout.mylist, items);
         // TODO Auto-generated constructor stub
 
         this.context=context;
-        this.itemname=itemname;
+        this.items=items;
         this.imgid=imgid;
     }
 
@@ -34,9 +36,9 @@ public class CustomListAdapter extends ArrayAdapter<String> {
         ImageView imageView = (ImageView) rowView.findViewById(R.id.icon);
         TextView extratxt = (TextView) rowView.findViewById(R.id.textView1);
 
-        txtTitle.setText(itemname.get(position));
+        txtTitle.setText(items.get(position).getRecipeName());
         imageView.setImageResource(imgid);
-        extratxt.setText("Description "+itemname.get(position));
+        extratxt.setText("Description: "+items.get(position).getIngredients().toString());
         return rowView;
 
     };
