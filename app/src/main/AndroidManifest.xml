@@ -3,6 +3,7 @@
     package="is.hi.recipeapp.hugbv2">
 
     <!-- To auto-complete the email text field in the login form with the user's emails -->
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.GET_ACCOUNTS" />
     <uses-permission android:name="android.permission.READ_PROFILE" />
     <uses-permission android:name="android.permission.READ_CONTACTS" />
@@ -24,12 +25,13 @@
         </activity>
         <activity
             android:name=".SearchActivity"
-            android:label="@string/title_activity_login" />
+            android:label="@string/title_activity_search">
+        </activity>
         <activity android:name=".SignupActivity" />
         <activity android:name=".AdminLogin" />
         <activity android:name=".AdminPage" />
         <activity
-            android:name=".MyShoppingList"
+            android:name=".ui.MyShoppingList"
             android:label="MyShoppingList"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity android:name=".AboutActivity"></activity>

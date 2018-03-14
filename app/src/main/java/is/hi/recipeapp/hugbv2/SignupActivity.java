@@ -15,6 +15,7 @@ import java.util.ArrayList;
 
 import butterknife.ButterKnife;
 import butterknife.BindView;
+import is.hi.recipeapp.hugbv2.model.Account;
 
 public class SignupActivity extends AppCompatActivity {
     private static final String TAG = "SignupActivity";
