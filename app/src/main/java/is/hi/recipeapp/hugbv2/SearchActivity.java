@@ -319,6 +319,7 @@ public class SearchActivity extends AppCompatActivity {
             //Initialize Id
             recipe.setId(recip.getString("id"));
 
+
             //Initialize images
             if (recip.has("smallImageUrls")) {
                 JSONArray imageUrls = recip.getJSONArray("smallImageUrls");
@@ -327,6 +328,17 @@ public class SearchActivity extends AppCompatActivity {
                     temp[j] = imageUrls.getString(j);
                 }
                 recipe.setSmallImageUrls(temp);
+
+  /*
+        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view,
+                                    int position, long id) {
+                String selectedItem = temp.get(position);
+                // Toast.makeText(getApplicationContext(), selectedItem, Toast.LENGTH_SHORT).show();
+                startActivity(new Intent(SearchActivity.this, AboutActivity.class));
+                */
+
             }
 
             //Initialize source name
