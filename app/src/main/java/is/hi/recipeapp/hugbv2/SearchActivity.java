@@ -76,14 +76,6 @@ public class SearchActivity extends AppCompatActivity {
     @BindView(R.id.search_bar)
     SearchView mSearchView;
 
-
-    // Mock ingredients variables
-    private String[] ingredientsGrillCheese = {"Cheese", "Ham", "Bread"};
-    private String[] ingredientsHotDog = {"Ketchup", "Fried Onion", "Mustard", "Hot Dog", "Bread"};
-    private String[] ingredientsPasta = {"Pasta", "Pepperoni", "Ham", "Carrots", "Bacon"};
-    private String[] ingredientsCocoPuffs = {"Coco Puffs", "Milk"};
-
-
     // ArrayLists
     ArrayList<recipeSearchMock> allRecipies = new ArrayList<>();
     ArrayList<Matches> recipeList = new ArrayList<>();
@@ -131,8 +123,10 @@ public class SearchActivity extends AppCompatActivity {
             @Override
             public void onItemClick(AdapterView<?> parent, View view,
                                     int position, long id) {
-                String selectedItem = recipeList.get(position).getRecipeName();
-                Toast.makeText(getApplicationContext(), selectedItem, Toast.LENGTH_SHORT).show();
+                String selectedItem = recipeList.get(position).getId();
+                Intent intent = new Intent(SearchActivity.this, AboutActivity.class);
+                intent.putExtra("recipId", selectedItem);
+                startActivity(intent);
             }
         });
     }
@@ -328,16 +322,6 @@ public class SearchActivity extends AppCompatActivity {
                     temp[j] = imageUrls.getString(j);
                 }
                 recipe.setSmallImageUrls(temp);
-
-  /*
-        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view,
-                                    int position, long id) {
-                String selectedItem = temp.get(position);
-                // Toast.makeText(getApplicationContext(), selectedItem, Toast.LENGTH_SHORT).show();
-                startActivity(new Intent(SearchActivity.this, AboutActivity.class));
-                */
 
             }
 
