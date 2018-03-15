@@ -34,7 +34,8 @@
             android:name=".ui.MyShoppingList"
             android:label="MyShoppingList"
             android:theme="@style/AppTheme.NoActionBar" />
-        <activity android:name=".AboutActivity"></activity>
+        <activity android:name=".AboutActivity">
+        </activity>
     </application>
 
 </manifest>

@@ -1,16 +1,39 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:orientation="vertical"
     tools:context="is.hi.recipeapp.hugbv2.AboutActivity">
 
-    <TextView
-        android:id="@+id/textView"
-        android:layout_width="220dp"
-        android:layout_height="160dp"
-        android:text="Shittið virkar!!"
-        tools:layout_editor_absoluteX="85dp"
-        tools:layout_editor_absoluteY="139dp" />
-</android.support.constraint.ConstraintLayout>
+    <ScrollView
+        android:id="@+id/recipeDetails"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <ImageView
+                android:id="@+id/recipeImage"
+                android:layout_width="319dp"
+                android:layout_height="218dp"
+                android:layout_gravity="center_horizontal" />
+
+            <TextView
+                android:id="@+id/ingredLines"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+
+            <ProgressBar
+                android:id="@+id/myProgressBar"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal" />
+        </LinearLayout>
+    </ScrollView>
+</RelativeLayout>
