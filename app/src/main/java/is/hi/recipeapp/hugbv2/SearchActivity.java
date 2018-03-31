@@ -375,7 +375,7 @@ public class SearchActivity extends AppCompatActivity {
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         if(item.getItemId()==R.id.MyShoppingList) {
-            Intent intent = new Intent(SearchActivity.this, MyShoppingList.class);
+            Intent intent = new Intent(SearchActivity.this, MyProfile.class);
             startActivity(intent);
         }
         return super.onOptionsItemSelected(item);
