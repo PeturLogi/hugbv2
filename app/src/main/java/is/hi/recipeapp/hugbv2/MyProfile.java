@@ -8,6 +8,7 @@ import android.view.View;
 
 import is.hi.recipeapp.hugbv2.ui.MyFavoriteRecipe;
 import is.hi.recipeapp.hugbv2.ui.MyShoppingList;
+import is.hi.recipeapp.hugbv2.ui.MyWeekMenu;
 
 public class MyProfile extends AppCompatActivity {
 
@@ -30,6 +31,15 @@ public class MyProfile extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(MyProfile.this, MyFavoriteRecipe.class);
+                startActivity(intent);
+            }
+        });
+
+        CardView cardView3 = (CardView) findViewById(R.id.weekmenu);
+        cardView3.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(MyProfile.this, MyWeekMenu.class);
                 startActivity(intent);
             }
         });

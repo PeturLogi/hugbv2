@@ -35,7 +35,8 @@
             android:theme="@style/AppTheme.NoActionBar" />
         <activity android:name=".AboutActivity" />
         <activity android:name=".MyProfile" />
-        <activity android:name=".ui.MyFavoriteRecipe"></activity>
+        <activity android:name=".ui.MyFavoriteRecipe" />
+        <activity android:name=".ui.MyWeekMenu"></activity>
     </application>
 
 </manifest>
