@@ -22,4 +22,15 @@
     <string name="title_activity_ingredients_list">IngredientsListActivity</string>
     <string name="action_add">Add Item</string>
     <string name="title_activity_search">Recipe Search</string>
+    
+    <string-array name="Week">
+        <item> Monday </item>
+        <item> Tuesday </item>
+        <item> Wednesday </item>
+        <item> Thursday </item>
+        <item> Friday </item>
+        <item> Saturday </item>
+        <item> Sunday </item>
+    </string-array>
+    
 </resources>
