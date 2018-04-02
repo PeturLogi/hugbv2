@@ -3,12 +3,17 @@ package is.hi.recipeapp.hugbv2.ui;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.widget.ListView;
+import android.widget.SimpleAdapter;
+
+import java.util.ArrayList;
 
 import is.hi.recipeapp.hugbv2.R;
 
 public class MyDayDetail extends AppCompatActivity {
 
     private ListView listView;
+
+    private ArrayList<Object> monday = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -28,9 +33,16 @@ public class MyDayDetail extends AppCompatActivity {
         // Hér erum við komin með valin dag úr MyWeekMenu sem strenginn selected_day
         String selected_day = MyWeekMenu.sharedPreferences.getString(MyWeekMenu.SEL_DAY, null);
 
-        if(selected_day.equalsIgnoreCase("Monday")) {
-            //Sækjum vistað recipe fyrir Monday o.s.frv
-        }else if (selected_day.equalsIgnoreCase("Tuesday")) {
+        if (selected_day.equalsIgnoreCase("Monday")) {
+
+            /*
+            listView=(ListView)findViewById(R.id.listView);
+            getObjectMonday();
+            SimpleAdapter adapter = new SimpleAdapter(this, android.R.layout.simple_list_item_1, monday);
+            listView.setAdapter(adapter);
+            */
+
+        } else if (selected_day.equalsIgnoreCase("Tuesday")) {
 
         } else if (selected_day.equalsIgnoreCase("Wednesday")) {
 
@@ -43,10 +55,21 @@ public class MyDayDetail extends AppCompatActivity {
         } else if (selected_day.equalsIgnoreCase("Sunday")) {
 
         }
+    }
 
-        //Vantar aðferð fyrir hvern vikudag sem bæði geymir uppskrift þegar
-        //kallað er á hana úr SearchActivity og síðan aðferð fyrir sama dag
-        //sem skilar uppskrift þegar aðferðin að ofan(setupListView) kallar á hana.
+        // SearchActivity class example:
+        // MyDayDetail myDayDetail = new MyDayDetail();
+        // Object recipe;
+        // myDayDetail.setObjectMonday(recipe);
+
+
+        private ArrayList<Object> getObjectMonday() {
+            return monday;
+        }
+
+        private void setObjectMonday(ArrayList<Object> monday) {
+            this.monday = monday;
+        }
 
     }
-}
+
