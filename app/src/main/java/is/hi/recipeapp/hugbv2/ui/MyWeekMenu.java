@@ -1,6 +1,7 @@
 package is.hi.recipeapp.hugbv2.ui;
 
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -22,6 +23,7 @@ public class MyWeekMenu extends AppCompatActivity {
 
     private ListView listView;
     public static SharedPreferences sharedPreferences;
+    public static String SEL_DAY;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,6 +37,7 @@ public class MyWeekMenu extends AppCompatActivity {
 
     private void setupUIViews() {
         listView = (ListView)findViewById(R.id.lvWeek);
+        sharedPreferences = getSharedPreferences("MY DAY", MODE_PRIVATE);
     }
 
     private void setupListView() {
@@ -48,13 +51,41 @@ public class MyWeekMenu extends AppCompatActivity {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long l) {
                 switch (position) {
-                    case 0: break;
-                    case 1: break;
-                    case 2: break;
-                    case 3: break;
-                    case 4: break;
-                    case 5: break;
-                    case 6: break;
+                    case 0: {
+                        startActivity(new Intent(MyWeekMenu.this, MyDayDetail.class));
+                        sharedPreferences.edit().putString(SEL_DAY, "Monday").apply();
+                        break;
+                    }
+                    case 1: {
+                        startActivity(new Intent(MyWeekMenu.this, MyDayDetail.class));
+                        sharedPreferences.edit().putString(SEL_DAY, "Tuesday").apply();
+                        break;
+                    }
+                    case 2: {
+                        startActivity(new Intent(MyWeekMenu.this, MyDayDetail.class));
+                        sharedPreferences.edit().putString(SEL_DAY, "Wednesday").apply();
+                        break;
+                    }
+                    case 3: {
+                        startActivity(new Intent(MyWeekMenu.this, MyDayDetail.class));
+                        sharedPreferences.edit().putString(SEL_DAY, "Thursday").apply();
+                        break;
+                    }
+                    case 4: {
+                        startActivity(new Intent(MyWeekMenu.this, MyDayDetail.class));
+                        sharedPreferences.edit().putString(SEL_DAY, "Friday").apply();
+                        break;
+                    }
+                    case 5: {
+                        startActivity(new Intent(MyWeekMenu.this, MyDayDetail.class));
+                        sharedPreferences.edit().putString(SEL_DAY, "Saturday").apply();
+                        break;
+                    }
+                    case 6: {
+                        startActivity(new Intent(MyWeekMenu.this, MyDayDetail.class));
+                        sharedPreferences.edit().putString(SEL_DAY, "Sunday").apply();
+                        break;
+                    }
                 }
             }
         });

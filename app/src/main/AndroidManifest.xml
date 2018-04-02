@@ -36,7 +36,8 @@
         <activity android:name=".AboutActivity" />
         <activity android:name=".MyProfile" />
         <activity android:name=".ui.MyFavoriteRecipe" />
-        <activity android:name=".ui.MyWeekMenu"></activity>
+        <activity android:name=".ui.MyWeekMenu" />
+        <activity android:name=".ui.MyDayDetail"></activity>
     </application>
 
 </manifest>
