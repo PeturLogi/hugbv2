@@ -48,6 +48,7 @@ public class AboutActivity extends AppCompatActivity {
     ImageView mRecipeImage;
 
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
