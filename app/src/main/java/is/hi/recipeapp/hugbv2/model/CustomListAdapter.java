@@ -8,6 +8,8 @@ import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.squareup.picasso.Picasso;
+
 import java.lang.reflect.Array;
 import java.util.ArrayList;
 
@@ -37,7 +39,7 @@ public class CustomListAdapter extends ArrayAdapter<Matches> {
         TextView extratxt = (TextView) rowView.findViewById(R.id.textView1);
 
         txtTitle.setText(items.get(position).getRecipeName());
-        imageView.setImageResource(imgid);
+        Picasso.get().load(items.get(position).getSmallImageUrls()[0]).into(imageView);
         extratxt.setText("Description: "+items.get(position).getIngredients().toString());
         return rowView;
 

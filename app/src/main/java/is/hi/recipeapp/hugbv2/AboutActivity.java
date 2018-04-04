@@ -9,6 +9,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
@@ -24,10 +25,12 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.IOException;
+import java.io.UnsupportedEncodingException;
 
 import butterknife.BindView;
 import is.hi.recipeapp.hugbv2.model.Nutrition;
 import is.hi.recipeapp.hugbv2.model.Recipe;
+import is.hi.recipeapp.hugbv2.model.SousChefRepository;
 import is.hi.recipeapp.hugbv2.ui.AlertDialogFragment;
 import okhttp3.Call;
 import okhttp3.Callback;
@@ -46,6 +49,8 @@ public class AboutActivity extends AppCompatActivity {
     TextView mIngredLines;
     @BindView(R.id.recipeImage)
     ImageView mRecipeImage;
+    @BindView(R.id.addFavorite)
+    Button mAddFavorite;
 
 
     @Override
@@ -60,8 +65,14 @@ public class AboutActivity extends AppCompatActivity {
         Intent intent = getIntent();
         recipId = intent.getStringExtra("recipId");
 
-        //Toast.makeText(getApplicationContext(), recipId, Toast.LENGTH_SHORT).show();
         getRecipe();
+
+        mAddFavorite.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                SousChefRepository.get(AboutActivity.this).addRecipe("test@testmail.com", recipId);
+            }
+        });
     }
 
     private void getRecipe() {
