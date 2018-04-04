@@ -29,6 +29,7 @@ import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
 import java.util.ArrayList;
+import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -40,6 +41,7 @@ import is.hi.recipeapp.hugbv2.model.CustomListAdapter;
 import is.hi.recipeapp.hugbv2.model.Matches;
 import is.hi.recipeapp.hugbv2.model.Recipe;
 import is.hi.recipeapp.hugbv2.model.RecipeData;
+import is.hi.recipeapp.hugbv2.model.SousChefRepository;
 import is.hi.recipeapp.hugbv2.model.recipeSearchMock;
 import okhttp3.Call;
 import okhttp3.Callback;
@@ -51,7 +53,7 @@ import okhttp3.Response;
 public class MyFavoriteRecipe extends AppCompatActivity {
 
     public static final String TAG = MyFavoriteRecipe.class.getSimpleName();
-    private String[] recipId;
+    private List<String> recipId;
     private RecipeData mRecipe;
     private Matches[] mMatches;
     private CustomListAdapter adapter;
@@ -73,23 +75,21 @@ public class MyFavoriteRecipe extends AppCompatActivity {
 
         mProgressBar.setVisibility(View.INVISIBLE);
 
+        recipId = SousChefRepository.get(MyFavoriteRecipe.this).getRecipes();
+        mMatches = new Matches[recipId.size()];
 
-        SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(this);
-        recipId = new String[] {preferences.getString("Id", "")};
-        mMatches = new Matches[recipId.length];
+        for (int i = 0; i < recipId.size(); i++) {
+            displayFavorites(i);
+        }
 
-        addRecipToFav();
-
-
-        //Toast.makeText(getApplicationContext(), recipId, Toast.LENGTH_LONG).show();
-
+        setDisplay();
     }
 
-    public void addRecipToFav() {
+    public void displayFavorites(int nr) {
         String apiKey = "ca9cb76e0f393e4e209217c8d388780f";
         String apiId = "c94137d2";
-        String getUrl = "http://api.yummly.com/v1/api/recipe/" + recipId[0] + "?_app_id=" + apiId + "&_app_key="
-                + apiKey;
+        String getUrl = "http://api.yummly.com/v1/api/recipe/" + recipId.get(nr) + "?_app_id=" +
+                apiId + "&_app_key=" + apiKey;
 
         if (isNeworkAvailable()) {
             toggleRefresh();
@@ -121,7 +121,8 @@ public class MyFavoriteRecipe extends AppCompatActivity {
                         String jsonData = response.body().string();
                         Log.v(TAG, jsonData);
                         if (response.isSuccessful()) {
-                            mRecipe = parseRecipe(jsonData);
+                            Matches temp = parseRecipe(jsonData);
+                            favRecipList.add(temp);
 
                             runOnUiThread(new Runnable() {
                                 @Override
@@ -145,16 +146,9 @@ public class MyFavoriteRecipe extends AppCompatActivity {
     }
 
     private void setDisplay() {
-        Attribution attribution = mRecipe.getAttribution();
+        //Attribution attribution = mRecipe.getAttribution();
 
-        adapter = new CustomListAdapter(this, favRecipList, R.drawable.cashking);
-
-        for (Matches item : mMatches) {
-            if (item.getRecipeName() != null) {
-                favRecipList.add(item);
-            }
-
-        }
+        adapter = new CustomListAdapter(this, favRecipList);
 
         mListViewFav = (ListView) findViewById(R.id.listViewFav);
         mListViewFav.setAdapter(adapter);
@@ -168,13 +162,10 @@ public class MyFavoriteRecipe extends AppCompatActivity {
         }
     }
 
-    private RecipeData parseRecipe(String jsonData) throws JSONException {
-        RecipeData recipe = new RecipeData();
+    private Matches parseRecipe(String jsonData) throws JSONException {
+        Matches match = getMatches(jsonData);
 
-        recipe.setAttribution(getAttribution(jsonData));
-        getMatches(jsonData);
-
-        return recipe;
+        return match;
     }
 
     private Attribution getAttribution(String string) throws JSONException {
@@ -191,37 +182,40 @@ public class MyFavoriteRecipe extends AppCompatActivity {
         return myAttribution;
     }
 
-    private void getMatches(String string) throws JSONException {
+    private Matches getMatches(String string) throws JSONException {
         JSONObject recipeData = new JSONObject(string);
 
+        Matches match = new Matches();
 
-        for (int i = 0; i < mMatches.length; i++) {
-            Matches recipe = new Matches();
+        //Initialize images
+        if (recipeData.has("images")) {
+            JSONArray imageURLS = recipeData.getJSONArray("images");
+            JSONObject smallImage = imageURLS.getJSONObject(imageURLS.length() - 1);
 
-            String[] temp;
+            String[] temp = new String[1];
 
-            // Initialize images
-            if (recipeData.has("images")) {
-                JSONArray imageUrsl = recipeData.getJSONArray("images");
+            temp[0] = smallImage.getString("hostedSmallUrl");
 
-                JSONObject smallImage = imageUrsl.getJSONObject(1);
-
-                temp = new String[1];
-                if (smallImage.has("hostedSmallUrl")) {
-                    temp[0] = smallImage.getString("hostedSmallUrl");
-                } else {
-                    temp[0] = "null";
-                }
-                recipe.setSmallImageUrls(temp);
-            }
-
-            // Initialize recipe name
-            if (recipeData.has("recipName")) {
-                recipe.setRecipeName(recipeData.getString("recipeName"));
-            }
-
-            mMatches[i] = recipe;
+            match.setSmallImageUrls(temp);
         }
+
+        // Initialize recipe name
+        if (recipeData.has("name")) {
+            match.setRecipeName(recipeData.getString("name"));
+        }
+
+        // Initialize recipe ingredients
+        if (recipeData.has("ingredientLines")) {
+            JSONArray ingred = recipeData.getJSONArray("ingredientLines");
+            String[] temp = new String[ingred.length()];
+
+            for (int i = 0; i < ingred.length(); i++) {
+                temp[i] = ingred.getString(i);
+            }
+            match.setIngredients(temp);
+        }
+
+        return match;
     }
 
     private boolean isNeworkAvailable() {

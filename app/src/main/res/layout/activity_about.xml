@@ -28,8 +28,9 @@
 
             <TextView
                 android:id="@+id/recipeNameHeader"
-                android:layout_width="match_parent"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
                 android:text="TextView" />
 
             <TextView
@@ -38,38 +39,67 @@
                 android:layout_height="wrap_content" />
 
             <TextView
-                android:id="@+id/textView"
+                android:id="@+id/cusine"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="TextView" />
+
+            <TextView
+                android:id="@+id/rating"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="TextView" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/nrServings"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:text="TextView" />
+
+                <TextView
+                    android:id="@+id/totalTime"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:text="TextView" />
+            </LinearLayout>
 
             <ProgressBar
                 android:id="@+id/myProgressBar"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal" />
-          
-          <TextView
-                android:id="@+id/totTime"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content" />
 
-            <Button
-                android:id="@+id/addFavorite"
+            <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="Add to favorite" />
-       
+                android:layout_height="match_parent"
+                android:orientation="horizontal">
+
+                <Button
+                    android:id="@+id/addFavorite"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentBottom="true"
+                    android:layout_alignParentStart="true"
+                    android:layout_weight="1"
+                    android:text="Add recipe to Favorites" />
+
+                <Button
+                    android:id="@+id/addIngredients"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="Add ingredients to shopping list" />
+            </LinearLayout>
+
         </LinearLayout>
     </ScrollView>
 
-    <Button
-        android:id="@+id/addToFav"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:layout_alignParentStart="true"
-        android:layout_marginBottom="25dp"
-        android:layout_marginStart="30dp"
-        android:text="Add to Favorites" />
+
 </RelativeLayout>

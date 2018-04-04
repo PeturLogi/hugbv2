@@ -91,7 +91,6 @@ public class SearchActivity extends AppCompatActivity {
     SearchView mSearchView;
 
     // Array listar
-    ArrayList<recipeSearchMock> allRecipies = new ArrayList<>();
     ArrayList<Matches> recipeList = new ArrayList<>();
 
 
@@ -277,7 +276,7 @@ public class SearchActivity extends AppCompatActivity {
         Attribution attribution = mData.getAttribution();
         Matches[] recipes = mData.getMatches();
 
-        adapter = new CustomListAdapter(this, recipeList, R.drawable.cashking);
+        adapter = new CustomListAdapter(this, recipeList);
 
         recipeList.clear();
         for (Matches item : recipes) {

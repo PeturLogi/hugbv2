@@ -16,7 +16,9 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".LoginActivity">
+        <activity
+            android:name=".LoginActivity"
+            android:label="Login">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -26,17 +28,27 @@
         <activity
             android:name=".SearchActivity"
             android:label="@string/title_activity_search" />
-        <activity android:name=".SignupActivity" />
+        <activity
+            android:name=".SignupActivity"
+            android:label="Sign up"/>
         <activity android:name=".AdminLogin" />
         <activity android:name=".AdminPage" />
         <activity
             android:name=".ui.MyShoppingList"
             android:label="MyShoppingList"
             android:theme="@style/AppTheme.NoActionBar" />
-        <activity android:name=".AboutActivity" />
-        <activity android:name=".MyProfile" />
-        <activity android:name=".ui.MyFavoriteRecipe" />
-        <activity android:name=".ui.MyWeekMenu" />
+        <activity
+            android:name=".AboutActivity"
+            android:label="Recipe Info"/>
+        <activity
+            android:name=".MyProfile"
+            android:label="My profile"/>
+        <activity
+            android:name=".ui.MyFavoriteRecipe"
+            android:label="Favorite Recipes"/>
+        <activity
+            android:name=".ui.MyWeekMenu"
+            android:label="My Week Menu"/>
         <activity android:name=".ui.MyDayDetail"></activity>
     </application>
 

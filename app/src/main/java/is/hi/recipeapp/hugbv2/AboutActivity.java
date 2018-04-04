@@ -51,6 +51,18 @@ public class AboutActivity extends AppCompatActivity {
     ImageView mRecipeImage;
     @BindView(R.id.addFavorite)
     Button mAddFavorite;
+    @BindView(R.id.recipeNameHeader)
+    TextView mHeader;
+    @BindView(R.id.nrServings)
+    TextView mServings;
+    @BindView(R.id.totalTime)
+    TextView mTimeSec;
+    @BindView(R.id.cusine)
+    TextView mCusine;
+    @BindView(R.id.addIngredients)
+    Button mAddIngred;
+    @BindView(R.id.rating)
+    TextView mRating;
 
 
     @Override
@@ -137,11 +149,25 @@ public class AboutActivity extends AppCompatActivity {
     private void setDisplay() {
         Picasso.get().load(mRecipe.getImage()).into(mRecipeImage);
         String[] ingredients = mRecipe.getIngredientLines();
+        String[] cusines = mRecipe.getCuisine();
+        mServings.setText("Nr of servings: " + mRecipe.getNumberOfServings());
+        mHeader.setText("\n" + mRecipe.getName() + "\n\n\n");
         String text = "";
         for (String line : ingredients) {
             text += line + "\n\n";
         }
         mIngredLines.setText(text);
+        text = "";
+        //if (cusines[0] != null) {
+        //    for (String line : cusines) {
+        //        text += line + "\n\n";
+        //    }
+        //}
+
+        mCusine.setText(text);
+        mTimeSec.setText("Time in seconds:" + mRecipe.getTotalTime());
+        mRating.setText("Yummli rating: " + mRecipe.getRating() + " out of 5\n");
+
 
     }
 
