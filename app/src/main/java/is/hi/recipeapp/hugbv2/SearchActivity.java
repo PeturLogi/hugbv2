@@ -226,7 +226,7 @@ public class SearchActivity extends AppCompatActivity {
         adapter = new CustomListAdapter(this, recipeList, R.drawable.cashking);
 
         recipeList.clear();
-        for (Matches item : mData.getMatches()) {
+        for (Matches item : recipes) {
             recipeList.add(item);
         }
 

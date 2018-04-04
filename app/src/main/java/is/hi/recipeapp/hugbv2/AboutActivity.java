@@ -2,13 +2,18 @@ package is.hi.recipeapp.hugbv2;
 
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.media.Image;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
+import android.preference.PreferenceManager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
@@ -24,11 +29,13 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.IOException;
+import java.io.UnsupportedEncodingException;
 
 import butterknife.BindView;
 import is.hi.recipeapp.hugbv2.model.Nutrition;
 import is.hi.recipeapp.hugbv2.model.Recipe;
 import is.hi.recipeapp.hugbv2.ui.AlertDialogFragment;
+import is.hi.recipeapp.hugbv2.ui.MyFavoriteRecipe;
 import okhttp3.Call;
 import okhttp3.Callback;
 import okhttp3.OkHttpClient;
@@ -40,12 +47,15 @@ public class AboutActivity extends AppCompatActivity {
     private Recipe mRecipe;
     public static final String TAG = AboutActivity.class.getSimpleName();
 
+
     @BindView(R.id.myProgressBar)
     ProgressBar mProgressBar;
     @BindView(R.id.ingredLines)
     TextView mIngredLines;
     @BindView(R.id.recipeImage)
     ImageView mRecipeImage;
+    @BindView(R.id.addToFav)
+    Button mAddToFav;
 
 
     @Override
@@ -60,8 +70,22 @@ public class AboutActivity extends AppCompatActivity {
         Intent intent = getIntent();
         recipId = intent.getStringExtra("recipId");
 
-        //Toast.makeText(getApplicationContext(), recipId, Toast.LENGTH_SHORT).show();
+        //Toast.makeText(getApplicationContext(), recipId, Toast.LENGTH_LONG).show();
         getRecipe();
+
+
+
+        mAddToFav.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(AboutActivity.this);
+                SharedPreferences.Editor editor = preferences.edit();
+                editor.putString("Id", recipId);
+                editor.apply();
+                Toast.makeText(getApplicationContext(), "Added to Favorites", Toast.LENGTH_SHORT).show();
+            }
+        });
+
     }
 
     private void getRecipe() {
@@ -252,4 +276,20 @@ public class AboutActivity extends AppCompatActivity {
         AlertDialogFragment dialog = new AlertDialogFragment();
         dialog.show(getFragmentManager(), "error_dialog");
     }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.menu,menu);
+        return super.onCreateOptionsMenu(menu);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        if(item.getItemId() == R.id.MyShoppingList) {
+            Intent intent = new Intent(AboutActivity.this, MyProfile.class);
+            startActivity(intent);
+        }
+        return super.onOptionsItemSelected(item);
+    }
+
 }
