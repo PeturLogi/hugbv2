@@ -17,6 +17,12 @@ import butterknife.ButterKnife;
 import butterknife.BindView;
 import is.hi.recipeapp.hugbv2.model.Account;
 
+/**
+ * @date april 2018
+ *
+ * Klasi fyrir stofnun aðganga svo hægt sé að nota smáforrit.
+ */
+
 public class SignupActivity extends AppCompatActivity {
     private static final String TAG = "SignupActivity";
 
@@ -32,8 +38,8 @@ public class SignupActivity extends AppCompatActivity {
     private static Account newAccount;
 
     /**
-     * A dummy authentication store containing known user names and passwords.
-     * TODO: remove after connection to database
+     * Tilbúin gervi gögn til að logga sig inn, user og password.
+     * TODO: henda út eftir tengingu við gagnagrunn
      */
     private static final ArrayList<String> DUMMY_CREDENTIALS = new ArrayList<String>();
     private String[] temp = new String[] {
@@ -61,7 +67,7 @@ public class SignupActivity extends AppCompatActivity {
         _loginLink.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                // Finish the registration screen and return to the Login activity
+                //lokar registration glugga og skilar okkur í login activity
                 Intent intent = new Intent(getApplicationContext(),LoginActivity.class);
                 startActivity(intent);
                 finish();
@@ -86,12 +92,12 @@ public class SignupActivity extends AppCompatActivity {
         progressDialog.setMessage("Creating Account...");
         progressDialog.show();
 
-        // Signup logic:
+        // signup ferlið
         new android.os.Handler().postDelayed(
                 new Runnable() {
                     public void run() {
                         boolean token = true;
-                        // Checks if email and password already exists
+                        //skoðar ef email og password séu nú þegar til
                         for (String credential : DUMMY_CREDENTIALS) {
                             String[] pieces = credential.split(":");
                             if(pieces[0].equals(_emailText.getText().toString())) {
@@ -112,6 +118,7 @@ public class SignupActivity extends AppCompatActivity {
     }
 
 
+    //lætur notanda vita ef signup gengur upp
     public void onSignupSuccess() {
         _signupButton.setEnabled(true);
         setResult(RESULT_OK, null);
@@ -123,7 +130,8 @@ public class SignupActivity extends AppCompatActivity {
 
         newAccount = new Account(name, address, email, mobile, password);
 
-        //TODO: replace after connection to database
+        //TODO: henda út eftir tengingu við gagnagrunn
+        //dummy credentials
         DUMMY_CREDENTIALS.add(name + ":" + password);
         Toast.makeText(getBaseContext(), "Signup successful!", Toast.LENGTH_LONG).show();
         Intent intent = new Intent(SignupActivity.this, SearchActivity.class);
@@ -131,12 +139,19 @@ public class SignupActivity extends AppCompatActivity {
         startActivity(intent);
     }
 
+    //lætur notanda vita ef signup gengur ekki upp.
     public void onSignupFailed() {
         Toast.makeText(getBaseContext(), "Signup failed, email already in use", Toast.LENGTH_LONG).show();
 
         _signupButton.setEnabled(true);
     }
 
+    /**
+     * Skilyrðin sem þarf að uppfylla svo hægt sé að stofna aðgang.
+     * Notandi látinn vita ef einhvað gengur ekki upp
+     *
+     * @return skilar réttu ef aðgangur hefur verið stofnaður
+     */
     public boolean validate() {
         boolean valid = true;
 
@@ -147,6 +162,7 @@ public class SignupActivity extends AppCompatActivity {
         String password = _passwordText.getText().toString();
         String reEnterPassword = _reEnterPasswordText.getText().toString();
 
+        //nafn verður að innihalda lágmark 3 bókstafi
         if (name.isEmpty() || name.length() < 3) {
             _nameText.setError("at least 3 characters");
             valid = false;
@@ -154,6 +170,7 @@ public class SignupActivity extends AppCompatActivity {
             _nameText.setError(null);
         }
 
+        //heimilsfang
         if (address.isEmpty()) {
             _addressText.setError("Enter Valid Address");
             valid = false;
@@ -161,7 +178,7 @@ public class SignupActivity extends AppCompatActivity {
             _addressText.setError(null);
         }
 
-
+        //email verður að vera á réttu formi
         if (email.isEmpty() || !android.util.Patterns.EMAIL_ADDRESS.matcher(email).matches()) {
             _emailText.setError("enter a valid email address");
             valid = false;
@@ -169,6 +186,7 @@ public class SignupActivity extends AppCompatActivity {
             _emailText.setError(null);
         }
 
+        //símanúmer verður að vera á réttu formi (7 tölustafir)
         if (mobile.isEmpty() || mobile.length()!=7) {
             _mobileText.setError("Enter Valid Mobile Number");
             valid = false;
@@ -176,6 +194,8 @@ public class SignupActivity extends AppCompatActivity {
             _mobileText.setError(null);
         }
 
+
+        //password verður að hafa á bilinu 4-10 bókstafi
         if (password.isEmpty() || password.length() < 4 || password.length() > 10) {
             _passwordText.setError("between 4 and 10 alphanumeric characters");
             valid = false;
@@ -183,6 +203,7 @@ public class SignupActivity extends AppCompatActivity {
             _passwordText.setError(null);
         }
 
+        //staðfesting á password sé rétt
         if (reEnterPassword.isEmpty() || reEnterPassword.length() < 4 || reEnterPassword.length() > 10 || !(reEnterPassword.equals(password))) {
             _reEnterPasswordText.setError("Password Do not match");
             valid = false;

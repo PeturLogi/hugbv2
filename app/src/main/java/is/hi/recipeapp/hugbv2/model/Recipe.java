@@ -1,7 +1,7 @@
 package is.hi.recipeapp.hugbv2.model;
 
 /**
- * Created by Pétur Logi Pétursson on 3/14/2018.
+ * @Date
  */
 
 public class Recipe {

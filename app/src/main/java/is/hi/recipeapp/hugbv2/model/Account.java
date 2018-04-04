@@ -1,9 +1,12 @@
 package is.hi.recipeapp.hugbv2.model;
 
 /**
- * Created by Pétur Logi Pétursson on 2/13/2018.
- * A class that contains an Account object that can be inserted into a database
+ * @Date April 2018
+ * Klasi sem inniheldur aðgangs hlut (e. Account object)
+ * sem hægt að setja í gagnagrunn.
  */
+
+
 
 public class Account {
 

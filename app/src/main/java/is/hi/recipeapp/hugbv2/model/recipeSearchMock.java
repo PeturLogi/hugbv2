@@ -1,12 +1,12 @@
 package is.hi.recipeapp.hugbv2.model;
 
-
+/**
+ * @date April 2018
+ *Klasi fyrir gervigögn, erum ekki að nota þetta eins og er
+ *
+ */
 
 import android.graphics.Bitmap;
-
-/**
- * Created by gunnarmarhardarson on 12/02/2018.
- */
 
 public class recipeSearchMock {
 
