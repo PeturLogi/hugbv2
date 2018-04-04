@@ -24,7 +24,7 @@ import is.hi.recipeapp.hugbv2.R;
  * HBV601G Hugbúnaðarverkefni 2
  * Háskóli Íslands
  *
- * Birtir val um vikudaga sem innihalda síðan hver um sig matseðil fyrir hvern vikudag
+ * Birtir val um vikudaga sem innihalda síðan hver um sig matseðil fyrir hvern vikudag.
  */
 
 public class MyWeekMenu extends AppCompatActivity {
