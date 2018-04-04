@@ -10,6 +10,15 @@ import is.hi.recipeapp.hugbv2.ui.MyFavoriteRecipe;
 import is.hi.recipeapp.hugbv2.ui.MyShoppingList;
 import is.hi.recipeapp.hugbv2.ui.MyWeekMenu;
 
+/**
+ *
+ * @date apríl 2018
+ *
+ * Klasi sem heldur utan umprófíl notanda,
+ * virkjar önnur activity
+ *
+ */
+
 public class MyProfile extends AppCompatActivity {
 
     @Override
@@ -17,6 +26,7 @@ public class MyProfile extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_my_profile2);
 
+        //virkjar klasann MyShoppingList
         CardView cardView = (CardView) findViewById(R.id.shoppinglist);
         cardView.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -26,6 +36,7 @@ public class MyProfile extends AppCompatActivity {
             }
         });
 
+        //virkjar klasann MyFavouriteRecipe
         CardView cardView2 = (CardView) findViewById(R.id.myfavoriterecipe);
         cardView2.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -35,6 +46,7 @@ public class MyProfile extends AppCompatActivity {
             }
         });
 
+        //virkjar myWeekMenu klasann
         CardView cardView3 = (CardView) findViewById(R.id.weekmenu);
         cardView3.setOnClickListener(new View.OnClickListener() {
             @Override

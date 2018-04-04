@@ -8,9 +8,19 @@ import android.os.Bundle;
 
 /**
  * Created by Pétur Logi Pétursson on 3/12/2018.
+ * HBV601G Hugbúnaðarverkefni 2
+ * Háskóli Íslands
+ *
+ * Kallar fram villumeldingu
  */
 
 public class AlertDialogFragment extends DialogFragment {
+
+    /**
+     * Sýnir villuskilaboð
+     * @param savedInstanceState
+     * @return dialog
+     */
     @Override
     public Dialog onCreateDialog(Bundle savedInstanceState) {
         Context context = getActivity();
