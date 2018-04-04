@@ -56,7 +56,7 @@ import org.json.JSONObject;
  * HBV601G Hugbúnaðarverkefni 2
  * Háskóli Íslands
  *
- * gerir okkur kleyft að leita af gögnum (uppskriftum) í gagnagrunni
+ * Klasi sem gerir okkur kleyft að leita af gögnum (uppskriftum) í gagnagrunni
  *
  */
 
@@ -111,6 +111,7 @@ public class SearchActivity extends AppCompatActivity {
 
         mProgressBar.setVisibility(View.INVISIBLE);
 
+        //search barinn
         SearchView.OnQueryTextListener queryTextListener = new SearchView.OnQueryTextListener() {
             @Override
             public boolean onQueryTextSubmit(String query) {
@@ -125,10 +126,15 @@ public class SearchActivity extends AppCompatActivity {
             }
         };
 
+
+        //hlustar á textann i searchbar
         mSearchView.setOnQueryTextListener(queryTextListener);
 
+        //swipe stuff
         gestureObject = new GestureDetectorCompat(this, new LearnGesture());
 
+
+        //virkjar leitar takkann og birtir það sem er leitað af.
         mShowRecipe.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -140,7 +146,7 @@ public class SearchActivity extends AppCompatActivity {
             }
         });
 
-
+        //virkjar aboutactivity
         mListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view,
@@ -155,6 +161,7 @@ public class SearchActivity extends AppCompatActivity {
 
 
     /**
+     *Tenging við API og sækir það sem við leitum af.
      *
      * @throws UnsupportedEncodingException
      */
@@ -174,6 +181,8 @@ public class SearchActivity extends AppCompatActivity {
 
         ArrayList<String> chosenIngred = new ArrayList<>();
 
+        //checkboxin fyrir pasta, chese og ham
+
         if (mCheckBoxPasta.isChecked()) {
             chosenIngred.add("pasta");
         }
@@ -188,6 +197,11 @@ public class SearchActivity extends AppCompatActivity {
             searchUrl += "&allowedIngredient[]=" + item;
         }
 
+
+        /**
+         * Athugar vort hægt sé að tengjast gagnagrunni yummli
+         * annars skilar villumelding
+         */
         if(isNeworkAvailable()) {
             toggleRefresh();
             OkHttpClient client = new OkHttpClient();
@@ -206,6 +220,15 @@ public class SearchActivity extends AppCompatActivity {
                     alertUserAboutError();
                 }
 
+
+                /**
+                 * Geymir json gögn um uppskrift í mRecipe breytu ef tenging er í boði
+                 * annars skilar villumeldingu
+                 *
+                 * @param call
+                 * @param response
+                 * @throws IOException
+                 */
                 @Override
                 public void onResponse(Call call, Response response) throws IOException {
                     runOnUiThread(new Runnable() {
@@ -246,6 +269,10 @@ public class SearchActivity extends AppCompatActivity {
          */
     }
 
+
+    /**
+     * það sem lætur birtast á listviewið
+     */
     private void updateDisplay() {
         Attribution attribution = mData.getAttribution();
         Matches[] recipes = mData.getMatches();
@@ -263,6 +290,7 @@ public class SearchActivity extends AppCompatActivity {
 
     }
 
+    //segir til um hvort progressbar sé sýnilegur eða ekki
     private void toggleRefresh() {
        if(mProgressBar.getVisibility() == View.INVISIBLE) {
            mProgressBar.setVisibility(View.VISIBLE);
@@ -271,6 +299,13 @@ public class SearchActivity extends AppCompatActivity {
        }
     }
 
+    /**
+     * BReytir json gögnum frá API í recipe hlut
+     *
+     * @param jsonData
+     * @return recip
+     * @throws JSONException
+     */
     private RecipeData parseRecipeDeitails(String jsonData) throws JSONException {
         RecipeData recipes = new RecipeData();
 
@@ -279,6 +314,15 @@ public class SearchActivity extends AppCompatActivity {
 
         return recipes;
     }
+
+    /**
+     * Tekur inn json data og breytir því attribution hlut
+     *
+     *
+     * @param string
+     * @return myAttribution
+     * @throws JSONException
+     */
 
     private Attribution getAttribution(String string) throws JSONException {
         JSONObject recipeData = new JSONObject(string);
@@ -294,6 +338,15 @@ public class SearchActivity extends AppCompatActivity {
         return myAttribution;
     }
 
+    /**
+     * Sækir JSON gögn sem samsvarar leitarskiyrðum og býr til array af hlutum sem
+     * json gögnin skila
+     *
+     * @param string
+     * @return recipes
+     * @throws JSONException
+     */
+
     private Matches[] getMatches(String string) throws JSONException {
         JSONObject recipeData = new JSONObject(string);
 
@@ -308,7 +361,8 @@ public class SearchActivity extends AppCompatActivity {
             JSONObject attributes = recip.getJSONObject("attributes");
 
             String[] temp;
-            //Initialize courses
+
+            //Frumstillir courses
             if(attributes.has("course")) {
                 JSONArray course = attributes.getJSONArray("course");
                 temp = new String[course.length()];
@@ -319,7 +373,7 @@ public class SearchActivity extends AppCompatActivity {
             }
 
 
-            //Initialize cuisines
+            //frumstillir cuisines
             if (attributes.has("cuisine")) {
                 JSONArray cuisine = attributes.getJSONArray("cuisine");
                 temp = new String[cuisine.length()];
@@ -330,18 +384,18 @@ public class SearchActivity extends AppCompatActivity {
             }
 
 
-            //Initialize rating
+            //Frumstillir rating
             if (recip.has("rating")) {
                 recipe.setRating(recip.getDouble("rating"));
             } else {
                 recipe.setRating(0.0);
             }
 
-            //Initialize Id
+            //frumstillir id
             recipe.setId(recip.getString("id"));
 
 
-            //Initialize images
+            //frumstillir smallImageUrls
             if (recip.has("smallImageUrls")) {
                 JSONArray imageUrls = recip.getJSONArray("smallImageUrls");
                 temp = new String[imageUrls.length()];
@@ -414,28 +468,36 @@ public class SearchActivity extends AppCompatActivity {
         return super.onTouchEvent(event);
     }
 
-    //gesture object class
+    //gesture object klasi
     class LearnGesture extends GestureDetector.SimpleOnGestureListener {
-        //SimpleOnGestureListener is the listener for what we want to do and how we do it
 
+        //SimpleOnGestureListener er "listener" fyrir það sem við viljum og hvernig við gerum það
+
+
+        //MotionEvent fyrir hægri og vinstri "swipe" á skjánum.
         @Override
         public boolean onFling(MotionEvent event1, MotionEvent event2,
                                float velocityX, float velocityY) {
 
             if(event2.getX() > event1.getX()) {
-                //for left to right swipe
+                //frá vinstri til hægri "swipe"
                 Intent intent = new Intent(
                         SearchActivity.this, LoginActivity.class);
                 finish(); //finish is used to stop history for SearchActivity class
                 startActivity(intent);
             } else if (event2.getX() < event1.getX()) {
-                //for right to left swipe
+                //ffrá hægri til vinstri "swipe"
                 Intent intent = new Intent(SearchActivity.this, MyShoppingList.class);
                 startActivity(intent);
             }
             return true;
         }
     }
+
+    /**
+     * Athugar hvort tenging sé í boði í gagnagrunn
+     * @return isAvailable
+     */
 
     private boolean isNeworkAvailable() {
         ConnectivityManager manager = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
@@ -447,6 +509,7 @@ public class SearchActivity extends AppCompatActivity {
         return isAvailable;
     }
 
+    //birtir villuskilabð
     private void alertUserAboutError() {
         AlertDialogFragment dialog = new AlertDialogFragment();
         dialog.show(getFragmentManager(), "error_dialog");
