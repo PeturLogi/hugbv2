@@ -47,7 +47,7 @@ public class MyWeekMenu extends AppCompatActivity {
         setupListView();
     }
 
-    // Setur upp viðmótið fyrir vikudaga
+    // Setur upp viðmótið fyrir vikudaga.
     private void setupUIViews() {
         listView = (ListView)findViewById(R.id.lvWeek);
         sharedPreferences = getSharedPreferences("MY DAY", MODE_PRIVATE);
