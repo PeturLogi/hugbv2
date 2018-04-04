@@ -19,12 +19,24 @@ import java.security.PublicKey;
 
 import is.hi.recipeapp.hugbv2.R;
 
+/**
+ * Created by Brynjar Árnason on 02/04/2018.
+ * HBV601G Hugbúnaðarverkefni 2
+ * Háskóli Íslands
+ *
+ * Birtir val um vikudaga sem innihalda síðan hver um sig matseðil fyrir hvern vikudag
+ */
+
 public class MyWeekMenu extends AppCompatActivity {
 
     private ListView listView;
     public static SharedPreferences sharedPreferences;
     public static String SEL_DAY;
 
+    /**
+     * Smiður
+     * @param savedInstanceState
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -35,11 +47,16 @@ public class MyWeekMenu extends AppCompatActivity {
         setupListView();
     }
 
+    // Setur upp viðmótið fyrir vikudaga
     private void setupUIViews() {
         listView = (ListView)findViewById(R.id.lvWeek);
         sharedPreferences = getSharedPreferences("MY DAY", MODE_PRIVATE);
     }
 
+    /**
+     * Setur upp lista með gögnum um vikudaga auk Listener sem hlustar eftir því á
+     * hvaða vikudag er smellt á og bregst við með opna nýtt avtivity MyDayDetail
+     */
     private void setupListView() {
         String[] week = getResources().getStringArray(R.array.Week);
 
@@ -92,7 +109,8 @@ public class MyWeekMenu extends AppCompatActivity {
     }
 
 
-
+    // Klasi sem inniheldur aðferð þar sem haldið er utan um mikilvægar breytur fyrir
+    // Adapter þegar kemur að því að umreyta gögnum frá Arraylist yfir í item á lista
     public class WeekAdapter extends ArrayAdapter {
 
         private int resource;
@@ -106,6 +124,13 @@ public class MyWeekMenu extends AppCompatActivity {
             layoutinflater = (LayoutInflater)context.getSystemService(context.LAYOUT_INFLATER_SERVICE);
         }
 
+        /**
+         *  Sækir og geymir gögn úr layout til að umbreyta með adapter til að sýna síðan í Viewlist
+         * @param postion
+         * @param convertView
+         * @param parent
+         * @return convertView
+         */
         @Override
         public View getView(int postion, @Nullable View convertView, @NonNull ViewGroup parent) {
             ViewHolder holder;
@@ -126,6 +151,7 @@ public class MyWeekMenu extends AppCompatActivity {
                 return convertView;
             }
 
+        // klasi sem heldur utan um breytur sem innhalda mynd og texta
         class ViewHolder{
             private LetterImageView ivLogo;
             private TextView tvWeek;

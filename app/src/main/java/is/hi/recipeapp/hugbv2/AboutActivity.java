@@ -35,11 +35,23 @@ import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.Response;
 
+/**
+ * @date april 2018
+ * HBV601G Hugbúnaðarverkefni 2
+ * Háskóli Íslands
+ *
+ * Tengist API gagnagrunni yummly.com og birtir upplýsingar um einstaka uppskrift sem valin er
+ * út frá lista sem birtist í SearchActivity og út frá auðkenni(id) þeirra uppskriftar
+ */
+
 public class AboutActivity extends AppCompatActivity {
-    private String recipId;
-    private Recipe mRecipe;
+    private String recipId; // Strengur sem heldur utan um auðkenni
+    private Recipe mRecipe; // Heldur utan um upplýsingar um einstak uppskrift
     public static final String TAG = AboutActivity.class.getSimpleName();
 
+    /**
+     * Tengingar við notendaviðmótið
+     */
     @BindView(R.id.myProgressBar)
     ProgressBar mProgressBar;
     @BindView(R.id.ingredLines)
@@ -48,6 +60,10 @@ public class AboutActivity extends AppCompatActivity {
     ImageView mRecipeImage;
 
 
+    /**
+     * Smiðurinn, birtir viðmótið og virkjar upphafs aðferðir
+     * @param savedInstanceState
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -64,11 +80,21 @@ public class AboutActivity extends AppCompatActivity {
         getRecipe();
     }
 
+    /**
+     * Tenging við API gagnagrunn yummply.com og sækir jason-gögn fyrir uppskrift
+     */
+
     private void getRecipe() {
+        // Breytur sem halda utan um upplýsingar um tengingu
         String apiKey = "ca9cb76e0f393e4e209217c8d388780f";
         String apiId = "c94137d2";
         String getUrl = "http://api.yummly.com/v1/api/recipe/" + recipId + "?_app_id=" + apiId + "&_app_key="
                 + apiKey;
+
+        /**
+         * Athugar hvort hægt sé að tengjast gagnagrunni yummly
+         * annars skilar villumeldingu
+         */
 
         if (isNeworkAvailable()) {
             toggleRefresh();
@@ -77,6 +103,12 @@ public class AboutActivity extends AppCompatActivity {
 
             Call call = client.newCall(request);
             call.enqueue(new Callback() {
+
+                /**
+                 * Birtir villuskilaboð ef ekki tenging er ekki í boði
+                 * @param call
+                 * @param e
+                 */
                 @Override
                 public void onFailure(Call call, IOException e) {
                     runOnUiThread(new Runnable() {
@@ -88,6 +120,13 @@ public class AboutActivity extends AppCompatActivity {
                     alertUserAboutError();
                 }
 
+                /**
+                 * Geymir json gögn um uppskrift í mRecipe breytu ef tenging er í boði
+                 * annars skilar villumeldingu
+                 * @param call
+                 * @param response
+                 * @throws IOException
+                 */
                 @Override
                 public void onResponse(Call call, Response response) throws IOException {
                     runOnUiThread(new Runnable() {
@@ -123,6 +162,7 @@ public class AboutActivity extends AppCompatActivity {
         }
     }
 
+    // Birtir upplýsingar um uppskrift á formi notendaviðmóts á skjá notanda ásamt mynd
     private void setDisplay() {
         Picasso.get().load(mRecipe.getImage()).into(mRecipeImage);
         String[] ingredients = mRecipe.getIngredientLines();
@@ -134,6 +174,12 @@ public class AboutActivity extends AppCompatActivity {
 
     }
 
+    /**
+     * Breytir json gögnum frá API yfir í recipe hlut
+     * @param jsonData
+     * @return recip
+     * @throws JSONException
+     */
     private Recipe parseRecipe(String jsonData) throws JSONException {
         Recipe recip = new Recipe();
         JSONObject recipeData = new JSONObject(jsonData);
@@ -230,6 +276,7 @@ public class AboutActivity extends AppCompatActivity {
         return recip;
     }
 
+    // Sýnir að vinnsla sé í gangi í notendaviðmóti
     private void toggleRefresh() {
         if(mProgressBar.getVisibility() == View.INVISIBLE) {
             mProgressBar.setVisibility(View.VISIBLE);
@@ -238,6 +285,10 @@ public class AboutActivity extends AppCompatActivity {
         }
     }
 
+    /**
+     * Athugar hvort tenging sé í boði í gagnagrunn
+     * @return isAvailable
+     */
     private boolean isNeworkAvailable() {
         ConnectivityManager manager = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
         NetworkInfo networkInfo = manager.getActiveNetworkInfo();
@@ -248,6 +299,7 @@ public class AboutActivity extends AppCompatActivity {
         return isAvailable;
     }
 
+    //Birtir villuskilaboð
     private void alertUserAboutError() {
         AlertDialogFragment dialog = new AlertDialogFragment();
         dialog.show(getFragmentManager(), "error_dialog");

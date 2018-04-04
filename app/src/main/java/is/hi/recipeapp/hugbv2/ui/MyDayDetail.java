@@ -9,12 +9,23 @@ import java.util.ArrayList;
 
 import is.hi.recipeapp.hugbv2.R;
 
+/**
+ * Created by Brynjar Árnason on 02/04/2018.
+ * HBV601G Hugbúnaðarverkefni 2
+ * Háskóli Íslands
+ *
+ * Birtir upplýsingar um uppskrift sem passar við valin vikudag í MyWeekMenu
+ */
 public class MyDayDetail extends AppCompatActivity {
 
-    private ListView listView;
+    private ListView listView; // heldur utan um listView
 
-    private ArrayList<Object> monday = new ArrayList<>();
+    private ArrayList<Object> monday = new ArrayList<>(); // Heldur utan um uppskrift fyrir monday
 
+    /**
+     * Smiðurinn
+     * @param savedInstanceState
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -24,10 +35,13 @@ public class MyDayDetail extends AppCompatActivity {
         setupListView();
     }
 
+    // heldur utan um vikudag í listview
     private void setupUIViews() {
         listView = (ListView)findViewById(R.id.lvDayDetail);
     }
 
+    // Finnur út úr hvaða vikudagur var valin og heldur utan um uppskrift sem tilheyrir
+    // þeim vikudagi
     private void setupListView() {
 
         // Hér erum við komin með valin dag úr MyWeekMenu sem strenginn selected_day
@@ -56,17 +70,20 @@ public class MyDayDetail extends AppCompatActivity {
 
         }
     }
-
+        // þetta eru aðeins upplýsingar til að geyma til hliðsjónar!!!
+        // Þessi klasi er ennþá í vinnslu
         // SearchActivity class example:
         // MyDayDetail myDayDetail = new MyDayDetail();
         // Object recipe;
         // myDayDetail.setObjectMonday(recipe);
 
 
+        // getter aðferð fyrir uppskrift tengt monday
         private ArrayList<Object> getObjectMonday() {
             return monday;
         }
 
+        // Setter aðferð fyrir uppskrift tengt monday
         private void setObjectMonday(ArrayList<Object> monday) {
             this.monday = monday;
         }
