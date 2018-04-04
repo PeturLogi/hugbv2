@@ -1,14 +1,17 @@
 package is.hi.recipeapp.hugbv2.model;
 
 /**
- * Created by Pétur Logi Pétursson on 3/14/2018.
+ * Klasi inniheldur attribute, description, value
+ * og unit, heldur utan um næringargildi uppskriftana úr API.
  */
 
 public class Nutrition {
     String attribute;
-    String desctiption;
+    String description;
     double value;
     String[] unit;
+
+    //getters og setters
 
     public String getAttribute() {
         return attribute;
@@ -18,12 +21,12 @@ public class Nutrition {
         this.attribute = attribute;
     }
 
-    public String getDesctiption() {
-        return desctiption;
+    public String getDescription() {
+        return description;
     }
 
-    public void setDesctiption(String desctiption) {
-        this.desctiption = desctiption;
+    public void setDescription(String description) {
+        this.description = description;
     }
 
     public double getValue() {

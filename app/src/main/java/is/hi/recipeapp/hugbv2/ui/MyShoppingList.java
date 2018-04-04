@@ -29,18 +29,29 @@ import android.view.View;
 
 import is.hi.recipeapp.hugbv2.R;
 
+/**
+ * Created by Brynjar Árnason on 02/04/2018.
+ * HBV601G Hugbúnaðarverkefni 2
+ * Háskóli Íslands
+ *
+ * Sýnir Innkaupalista þar sem notandi getur bætt við og eytt hráefnum
+ */
 public class MyShoppingList extends AppCompatActivity {
 
     ArrayList<String> shoppingList = null;
     ArrayAdapter<String> adapter = null;
     ListView lv = null;
 
+    /**
+     * Smiður
+     * @param savedInstanceState
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_myshoppinglist);
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar); // Sýnir Toolbar
+        setSupportActionBar(toolbar); // viðauki við Toolbar
 
         shoppingList = getArrayVal(getApplicationContext());
         adapter = new ArrayAdapter(this, android.R.layout.simple_list_item_1, shoppingList);
@@ -60,12 +71,23 @@ public class MyShoppingList extends AppCompatActivity {
 
     }
 
+    /**
+     * heldur utan um viðmót sem gefur aðgang að innkaupalistanum
+     * @param menu
+     * @return onCreateOptionsMenu(menu)
+     */
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.menushoppinglist,menu);
         return super.onCreateOptionsMenu(menu);
     }
 
+    /**
+     * Birtir viðmót sem gefur val um að bæta við hráefni á lista
+     * þegar smellt er á hnapp
+     * @param item
+     * @return true
+     */
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
 
@@ -95,6 +117,11 @@ public class MyShoppingList extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
+    /**
+     * Skilar hráefni á lista með stórum staf ef hráefni er ritað með litlum staf í upphafi
+     * @param original
+     * @return Uppercase
+     */
     public static String preferredCase(String original)
     {
         if (original.isEmpty())
@@ -103,6 +130,12 @@ public class MyShoppingList extends AppCompatActivity {
         return original.substring(0, 1).toUpperCase() + original.substring(1).toLowerCase();
     }
 
+    /**
+     * Sér til þess að hráefni á lista geymist með SharedPreferences
+     * og hægt sé að nálgast hann næst þegar opnað er listann
+     * @param inArrayList
+     * @param context
+     */
     public static void storeArrayVal( ArrayList<String> inArrayList, Context context)
     {
         Set<String> WhatToWrite = new HashSet<String>(inArrayList);
@@ -112,6 +145,11 @@ public class MyShoppingList extends AppCompatActivity {
         prefEditor.commit();
     }
 
+    /**
+     * Birtir hráefni sem geymd hafa verið með SharedPreferences
+     * @param dan
+     * @return ArrayList<String>(tempSet)
+     */
     public static ArrayList getArrayVal( Context dan)
     {
         SharedPreferences WordSearchGetPrefs = dan.getSharedPreferences("dbArrayValues",Activity.MODE_PRIVATE);
@@ -120,6 +158,12 @@ public class MyShoppingList extends AppCompatActivity {
         return new ArrayList<String>(tempSet);
     }
 
+    /**
+     * Birtir staðfestingu á hvort það eigi að eyða hlut út af lista
+     * þegar ýtt er á hlut. Eyðir hráefni út af lista varanlega ef staðfesting er gefin
+     * @param selectedItem
+     * @param position
+     */
     public void removeElement(String selectedItem, final int position){
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setTitle("Remove " + selectedItem + "?");
