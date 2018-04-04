@@ -2,7 +2,7 @@ package is.hi.recipeapp.hugbv2.model;
 
 /**
  * @date April 2018
- *Klasi fyrir gervigögn, erum ekki að nota þetta eins og er
+ *Klasi fyrir gervigögn, erum ekki að nota þetta eins og er.
  *
  */
 
