@@ -19,15 +19,13 @@ public class CustomListAdapter extends ArrayAdapter<Matches> {
 
     private final Activity context;
     private final ArrayList<Matches> items;
-    private final Integer imgid;
 
-    public CustomListAdapter(Activity context, ArrayList<Matches> items, Integer imgid) {
+    public CustomListAdapter(Activity context, ArrayList<Matches> items) {
         super(context, R.layout.mylist, items);
         // TODO Auto-generated constructor stub
 
         this.context=context;
         this.items=items;
-        this.imgid=imgid;
     }
 
     public View getView(int position,View view,ViewGroup parent) {
@@ -40,8 +38,22 @@ public class CustomListAdapter extends ArrayAdapter<Matches> {
 
         txtTitle.setText(items.get(position).getRecipeName());
         Picasso.get().load(items.get(position).getSmallImageUrls()[0]).into(imageView);
-        extratxt.setText("Description: "+items.get(position).getIngredients().toString());
+        extratxt.setText("Description: " + convertToString(items.get(position).getIngredients()));
         return rowView;
 
     };
+
+    public String convertToString(String[] array) {
+        String value = "";
+
+        for (int i = 0; i < array.length; i++) {
+            if (i == array.length-1) {
+                value += array[i] + ".";
+            } else {
+                value += array[i] + ", ";
+            }
+        }
+
+        return value;
+    }
 }
