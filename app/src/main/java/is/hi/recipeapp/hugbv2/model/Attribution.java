@@ -1,15 +1,19 @@
 package is.hi.recipeapp.hugbv2.model;
 
 /**
- * Created by Pétur Logi Pétursson on 3/12/2018.
+ * @Date April 2018
+ *
+ * Attrubution klasi inniheldur html, url, text og logo, heldur utan um
+ * höfundarétt API's
  */
-
 public class Attribution {
 
     private String html;
     private String url;
     private String text;
     private String logo;
+
+    //getters og setters
 
     public String getHtml() {
         return html;
