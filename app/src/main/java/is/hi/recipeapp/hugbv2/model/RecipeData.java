@@ -1,12 +1,16 @@
 package is.hi.recipeapp.hugbv2.model;
 
 /**
- * Created by Pétur Logi Pétursson on 3/12/2018.
+ * @date april 2018
+ *
+ * Klasi sem heldur utan um klasana Attribution og Matches
  */
 
 public class RecipeData {
     private Attribution mAttribution;
     private Matches[] mMatches;
+
+    //getters og setters
 
     public Attribution getAttribution() {
         return mAttribution;

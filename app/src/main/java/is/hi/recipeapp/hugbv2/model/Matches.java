@@ -1,7 +1,14 @@
 package is.hi.recipeapp.hugbv2.model;
 
 /**
- * Created by Pétur Logi Pétursson on 3/12/2018.
+ *
+ * @Date april 2018
+ *
+ * Klasi sem inniheldur cures, cuisine, rating, id
+ * smallImageUrls, sourceDisplayName, totalTimeSeconds,
+ * ingredients, recipename, heldur utan um
+ * uppbyggingu á leitarniðurstöðum úr API
+ *
  */
 
 public class Matches {
@@ -16,6 +23,7 @@ public class Matches {
     private String[] ingredients;
     private String recipeName;
 
+//getters og setters
 
     public String[] getCourse() {
         return course;

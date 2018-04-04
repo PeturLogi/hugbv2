@@ -3,9 +3,13 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
+      <module fileurl="file://C:\Users\villz\StudioProjects\hugbv2\app\app.iml" filepath="C:\Users\villz\StudioProjects\hugbv2\app\app.iml" />
       <module fileurl="file://C:\Users\villz_000\StudioProjects\hugbv2\app\app.iml" filepath="C:\Users\villz_000\StudioProjects\hugbv2\app\app.iml" />
+      <module fileurl="file://C:\Users\User\AndroidStudioProjects\hugbv2\app\app.iml" filepath="C:\Users\User\AndroidStudioProjects\hugbv2\app\app.iml" />
       <module fileurl="file://C:\Users\villz_000\StudioProjects\hugbv2\hbv2Git.iml" filepath="C:\Users\villz_000\StudioProjects\hugbv2\hbv2Git.iml" />
       <module fileurl="file://$PROJECT_DIR$/hugbv2.iml" filepath="$PROJECT_DIR$/hugbv2.iml" />
+      <module fileurl="file://C:\Users\User\AndroidStudioProjects\hugbv2\hugbv2.iml" filepath="C:\Users\User\AndroidStudioProjects\hugbv2\hugbv2.iml" />
+      <module fileurl="file://C:\Users\villz\StudioProjects\hugbv2\hugbv2.iml" filepath="C:\Users\villz\StudioProjects\hugbv2\hugbv2.iml" />
       <module fileurl="file://C:\Users\Alienware\Documents\hbv2Git\hugbv2.iml" filepath="C:\Users\Alienware\Documents\hbv2Git\hugbv2.iml" />
     </modules>
   </component>

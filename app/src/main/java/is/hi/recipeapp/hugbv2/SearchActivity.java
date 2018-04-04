@@ -49,6 +49,18 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+
+/**
+ *
+ * @date April 2018
+ * HBV601G Hugbúnaðarverkefni 2
+ * Háskóli Íslands
+ *
+ * gerir okkur kleyft að leita af gögnum (uppskriftum) í gagnagrunni
+ *
+ */
+
+
 public class SearchActivity extends AppCompatActivity {
 
     public static final String TAG = SearchActivity.class.getSimpleName();
@@ -58,8 +70,10 @@ public class SearchActivity extends AppCompatActivity {
     private String resultStart = "0";
     //ArrayAdapter<String> adapter;
     EditText editText;
-    // Login variables
+    // Login breytur
     private GestureDetectorCompat gestureObject;
+
+    //tenging við layoutið activity_search.xml
 
     @BindView(R.id.showRecipe)
     Button mShowRecipe;
@@ -76,9 +90,17 @@ public class SearchActivity extends AppCompatActivity {
     @BindView(R.id.search_bar)
     SearchView mSearchView;
 
-    // ArrayLists
+    // Array listar
     ArrayList<recipeSearchMock> allRecipies = new ArrayList<>();
     ArrayList<Matches> recipeList = new ArrayList<>();
+
+
+    /**
+     * smiðurinn birtir viðmótið activity_search.xml og virkjar upphafs aðferðir
+     *
+     * @param savedInstanceState
+     */
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -131,6 +153,11 @@ public class SearchActivity extends AppCompatActivity {
         });
     }
 
+
+    /**
+     *
+     * @throws UnsupportedEncodingException
+     */
 
     private void getRecipes() throws UnsupportedEncodingException {
         String apiKey = "ca9cb76e0f393e4e209217c8d388780f";
