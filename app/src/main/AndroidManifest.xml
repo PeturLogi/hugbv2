@@ -31,8 +31,6 @@
         <activity
             android:name=".SignupActivity"
             android:label="Sign up"/>
-        <activity android:name=".AdminLogin" />
-        <activity android:name=".AdminPage" />
         <activity
             android:name=".ui.MyShoppingList"
             android:label="MyShoppingList"

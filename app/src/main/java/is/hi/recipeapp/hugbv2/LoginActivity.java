@@ -31,7 +31,7 @@ public class LoginActivity extends AppCompatActivity {
     @BindView(R.id.input_password) EditText _passwordText;
     @BindView(R.id.btn_login) Button _loginButton;
     @BindView(R.id.link_signup) TextView _signupLink;
-    @BindView(R.id.admin_login) TextView _adminlogin;
+
 
     /**
      * Tilbúin gervi gögn til að logga sig inn, user og password.
@@ -64,18 +64,6 @@ public class LoginActivity extends AppCompatActivity {
             public void onClick(View v) {
                 //virkjar signup activity
                 Intent intent = new Intent(getApplicationContext(), SignupActivity.class);
-                startActivityForResult(intent, REQUEST_SIGNUP);
-                finish();
-                overridePendingTransition(R.anim.push_left_in, R.anim.push_left_out);
-            }
-        });
-
-        // takki sem virkjar adminlogin actiity
-        _adminlogin.setOnClickListener(new View.OnClickListener() {
-
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(getApplicationContext(), AdminLogin.class);
                 startActivityForResult(intent, REQUEST_SIGNUP);
                 finish();
                 overridePendingTransition(R.anim.push_left_in, R.anim.push_left_out);
