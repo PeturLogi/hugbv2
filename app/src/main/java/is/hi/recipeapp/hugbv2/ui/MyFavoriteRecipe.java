@@ -1,48 +1,33 @@
 package is.hi.recipeapp.hugbv2.ui;
 
 import android.content.Context;
-import android.content.Intent;
-import android.content.SharedPreferences;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
-import android.preference.PreferenceManager;
-import android.support.v4.view.GestureDetectorCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.view.WindowManager;
-import android.widget.EditText;
-import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.ProgressBar;
-import android.widget.TextView;
 import android.widget.Toast;
-
-import com.squareup.picasso.Picasso;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.IOException;
-import java.io.UnsupportedEncodingException;
-import java.net.URLEncoder;
 import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import is.hi.recipeapp.hugbv2.AboutActivity;
 import is.hi.recipeapp.hugbv2.R;
-import is.hi.recipeapp.hugbv2.SearchActivity;
 import is.hi.recipeapp.hugbv2.model.Attribution;
 import is.hi.recipeapp.hugbv2.model.CustomListAdapter;
 import is.hi.recipeapp.hugbv2.model.Matches;
-import is.hi.recipeapp.hugbv2.model.Recipe;
 import is.hi.recipeapp.hugbv2.model.RecipeData;
-import is.hi.recipeapp.hugbv2.model.SousChefRepository;
-import is.hi.recipeapp.hugbv2.model.recipeSearchMock;
+import is.hi.recipeapp.hugbv2.repository.SousChefRepository;
 import okhttp3.Call;
 import okhttp3.Callback;
 import okhttp3.OkHttpClient;

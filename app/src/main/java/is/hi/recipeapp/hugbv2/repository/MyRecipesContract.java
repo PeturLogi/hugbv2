@@ -1,4 +1,4 @@
-package is.hi.recipeapp.hugbv2.model;
+package is.hi.recipeapp.hugbv2.repository;
 
 /**
  * Created by Pétur Logi Pétursson on 3/27/2018.

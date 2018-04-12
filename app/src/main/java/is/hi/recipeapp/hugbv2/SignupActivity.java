@@ -16,6 +16,7 @@ import java.util.ArrayList;
 import butterknife.ButterKnife;
 import butterknife.BindView;
 import is.hi.recipeapp.hugbv2.model.Account;
+import is.hi.recipeapp.hugbv2.service.AccountService;
 
 /**
  * @date april 2018
@@ -41,11 +42,16 @@ public class SignupActivity extends AppCompatActivity {
      * Tilbúin gervi gögn til að logga sig inn, user og password.
      * TODO: henda út eftir tengingu við gagnagrunn
      */
-    private static final ArrayList<String> DUMMY_CREDENTIALS = new ArrayList<String>();
+    private static final ArrayList<String> DUMMY_CREDENTIALS = new ArrayList();
+
+    private static ArrayList<Account> mAccounts;
+
     private String[] temp = new String[] {
             "foo@example.com:hello", "bar@example.com:world", "hopur6@hi.is:hopur6",
             "testmail@gmail.com:TestPassWord123"
     };
+
+    private AccountService sAccountService;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -53,9 +59,10 @@ public class SignupActivity extends AppCompatActivity {
         setContentView(R.layout.activity_signup);
         ButterKnife.bind(this);
 
-        for (int i = 0; i < temp.length; i++) {
-            DUMMY_CREDENTIALS.add(temp[i]);
-        }
+        sAccountService = LoginActivity.getAccountService();
+        sAccountService.setSignupActivity(SignupActivity.this);
+
+        mAccounts = sAccountService.getAccounts();
 
         _signupButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -97,21 +104,18 @@ public class SignupActivity extends AppCompatActivity {
                 new Runnable() {
                     public void run() {
                         boolean token = true;
-                        //skoðar ef email og password séu nú þegar til
-                        for (String credential : DUMMY_CREDENTIALS) {
-                            String[] pieces = credential.split(":");
-                            if(pieces[0].equals(_emailText.getText().toString())) {
+                        for (Account account : mAccounts) {
+                            if (account.getEmail().equals(_emailText.getText().toString())) {
                                 token = false;
                             }
                         }
-                        if(token) {
+
+                        if (token) {
                             onSignupSuccess();
                         } else {
                             onSignupFailed();
                         }
 
-                        //onSignupSuccess();
-                        // onSignupFailed();
                         progressDialog.dismiss();
                     }
                 }, 3000);
@@ -132,11 +136,13 @@ public class SignupActivity extends AppCompatActivity {
 
         //TODO: henda út eftir tengingu við gagnagrunn
         //dummy credentials
-        DUMMY_CREDENTIALS.add(name + ":" + password);
-        Toast.makeText(getBaseContext(), "Signup successful!", Toast.LENGTH_LONG).show();
-        Intent intent = new Intent(SignupActivity.this, SearchActivity.class);
-        finish();
-        startActivity(intent);
+        //DUMMY_CREDENTIALS.add(name + ":" + password);
+        sAccountService.addAccount(newAccount);
+
+        //Toast.makeText(getBaseContext(), "Signup successful!", Toast.LENGTH_LONG).show();
+        //Intent intent = new Intent(SignupActivity.this, SearchActivity.class);
+        //finish();
+        //startActivity(intent);
     }
 
     //lætur notanda vita ef signup gengur ekki upp.
@@ -212,5 +218,11 @@ public class SignupActivity extends AppCompatActivity {
         }
 
         return valid;
+    }
+
+    public void signupSuccess() {
+        Intent intent = new Intent(this, SearchActivity.class);
+        finish();
+        startActivity(intent);
     }
 }

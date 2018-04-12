@@ -1,12 +1,10 @@
-package is.hi.recipeapp.hugbv2.model;
+package is.hi.recipeapp.hugbv2.repository;
 
 import android.content.Context;
 
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.util.Log;
-
-import static is.hi.recipeapp.hugbv2.model.MyRecipesContract.*;
 
 /**
  * Created by Pétur Logi Pétursson on 3/27/2018.
@@ -24,12 +22,12 @@ public class SousChefDbHelper extends SQLiteOpenHelper {
     public void onCreate(SQLiteDatabase database) {
         Log.d("Gagnagrunnur", "onCreate");
 
-        database.execSQL("create table " + MyRecipesTable.NAME + "(" +
+        database.execSQL("create table " + MyRecipesContract.MyRecipesTable.NAME + "(" +
         //"_id integer primary key autoincrement, " +
-                MyRecipesTable.Cols.RECIPID + " TEXT," +
-                MyRecipesTable.Cols.EMAIL  + " TEXT," +
-                " primary key(" + MyRecipesTable.Cols.RECIPID  + "," +
-                MyRecipesTable.Cols.EMAIL + "))" );
+                MyRecipesContract.MyRecipesTable.Cols.RECIPID + " TEXT," +
+                MyRecipesContract.MyRecipesTable.Cols.EMAIL  + " TEXT," +
+                " primary key(" + MyRecipesContract.MyRecipesTable.Cols.RECIPID  + "," +
+                MyRecipesContract.MyRecipesTable.Cols.EMAIL + "))" );
     }
 
     @Override
