@@ -7,6 +7,8 @@ import android.net.NetworkInfo;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
@@ -79,6 +81,7 @@ public class AboutActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 SousChefRepository.get(AboutActivity.this).addRecipe("test@testmail.com", recipId);
+                Toast.makeText(getApplicationContext(), "Added to Favorites!", Toast.LENGTH_SHORT).show();
             }
         });
     }
@@ -261,6 +264,21 @@ public class AboutActivity extends AppCompatActivity {
         }
 
         return recip;
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.menu,menu);
+        return super.onCreateOptionsMenu(menu);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        if(item.getItemId()==R.id.MyShoppingList) {
+            Intent intent = new Intent(AboutActivity.this, MyProfile.class);
+            startActivity(intent);
+        }
+        return super.onOptionsItemSelected(item);
     }
 
     private void toggleRefresh() {
