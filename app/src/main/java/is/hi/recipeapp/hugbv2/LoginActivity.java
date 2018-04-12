@@ -11,8 +11,13 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import java.util.ArrayList;
+
 import butterknife.ButterKnife;
 import butterknife.BindView;
+import is.hi.recipeapp.hugbv2.model.Account;
+import is.hi.recipeapp.hugbv2.service.AccountService;
 
 /**
  *
@@ -26,26 +31,28 @@ import butterknife.BindView;
 public class LoginActivity extends AppCompatActivity {
     private static final String TAG = "LoginActivity";
     private static final int REQUEST_SIGNUP = 0;
+    private static AccountService sAccountService = new AccountService();
+    ArrayList<Account> mAccounts;
 
-    @BindView(R.id.input_email) EditText _emailText;
-    @BindView(R.id.input_password) EditText _passwordText;
-    @BindView(R.id.btn_login) Button _loginButton;
-    @BindView(R.id.link_signup) TextView _signupLink;
-    @BindView(R.id.admin_login) TextView _adminlogin;
+    @BindView(R.id.input_email)
+    EditText _emailText;
+    @BindView(R.id.input_password)
+    EditText _passwordText;
+    @BindView(R.id.btn_login)
+    Button _loginButton;
+    @BindView(R.id.link_signup)
+    TextView _signupLink;
 
-    /**
-     * Tilbúin gervi gögn til að logga sig inn, user og password.
-     * TODO: henda út eftir tengingu við gagnagrunn
-     */
-    private static final String[] DUMMY_CREDENTIALS = new String[] {
-            "foo@example.com:hello", "bar@example.com:world", "hopur6@hi.is:hopur6",
-            "testmail@gmail.com:TestPassWord123", "a@a.a:aaaa"
-    };
+    // Geymir email þess sem ætlar að skrá sig inn
+    private String iEmail;
+    // Geymir lykilorð þess sem ætlar að skrá sig inn
+    private String iPassword;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
+        sAccountService.setLoginActivity(LoginActivity.this);
         ButterKnife.bind(this);
 
         //login takki, virkjar search activity
@@ -53,7 +60,12 @@ public class LoginActivity extends AppCompatActivity {
 
             @Override
             public void onClick(View v) {
-                login();
+                iEmail = _emailText.getText().toString();
+                iPassword = _passwordText.getText().toString();
+
+                mAccounts = sAccountService.getAccounts();
+
+               login();
             }
         });
 
@@ -69,22 +81,9 @@ public class LoginActivity extends AppCompatActivity {
                 overridePendingTransition(R.anim.push_left_in, R.anim.push_left_out);
             }
         });
-
-        // takki sem virkjar adminlogin actiity
-        _adminlogin.setOnClickListener(new View.OnClickListener() {
-
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(getApplicationContext(), AdminLogin.class);
-                startActivityForResult(intent, REQUEST_SIGNUP);
-                finish();
-                overridePendingTransition(R.anim.push_left_in, R.anim.push_left_out);
-            }
-        });
     }
 
-    //login ferlið
-    public void login() {
+    private void login() {
         Log.d(TAG, "Login");
 
         if (!validate()) {
@@ -100,36 +99,30 @@ public class LoginActivity extends AppCompatActivity {
         progressDialog.setMessage("Authenticating...");
         progressDialog.show();
 
-        final String email = _emailText.getText().toString();
-        final String password = _passwordText.getText().toString();
-
         //auðkennis ferlið
         new android.os.Handler().postDelayed(
                 new Runnable() {
                     public void run() {
                         // Checks if email and password exist in database/mockdatabase
                         boolean token = false;
-                        for (String credential : DUMMY_CREDENTIALS) {
-                            String[] pieces = credential.split(":");
-                            if (pieces[0].equals(email)) {
-                                if(pieces[1].equals(password)) {
-                                    token = true;
-                                }
+                        Account temp = null;
+                        for (Account account : mAccounts) {
+                            if (account.getEmail().equals(iEmail) && account.getPassword().equals(iPassword)) {
+                                token = true;
+                                temp = account;
                             }
                         }
 
                         if (token) {
-                            onLoginSuccess();
+                            onLoginSuccess(temp);
                         } else {
                             onLoginFailed();
                         }
-
-                        //onLoginSuccess();
-                        // onLoginFailed();
                         progressDialog.dismiss();
                     }
                 }, 3000);
     }
+
 
 
     @Override
@@ -151,9 +144,11 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     //ef innskráning tekst fær notandi skilaboð um að það hafi tekist.
-    public void onLoginSuccess() {
+    public void onLoginSuccess(Account account) {
         _loginButton.setEnabled(true);
         Toast.makeText(getBaseContext(), "Login successful", Toast.LENGTH_LONG).show();
+
+        sAccountService.login(account);
 
         Intent intent = new Intent(LoginActivity.this, SearchActivity.class);
         finish();
@@ -196,5 +191,9 @@ public class LoginActivity extends AppCompatActivity {
         }
 
         return valid;
+    }
+
+    public static AccountService getAccountService() {
+        return sAccountService;
     }
 }

@@ -63,12 +63,6 @@
             android:gravity="center"
             android:textSize="16dip"/>
 
-        <TextView
-            android:id="@+id/admin_login"
-            android:layout_width="88dp"
-            android:layout_height="wrap_content"
-            android:text="Admin login" />
-
     </LinearLayout>
 
 </ScrollView>

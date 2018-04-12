@@ -1,4 +1,4 @@
-package is.hi.recipeapp.hugbv2.model;
+package is.hi.recipeapp.hugbv2.repository;
 
 import android.content.ContentValues;
 import android.content.Context;

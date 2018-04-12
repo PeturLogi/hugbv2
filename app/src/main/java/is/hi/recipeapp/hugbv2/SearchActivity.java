@@ -89,6 +89,10 @@ public class SearchActivity extends AppCompatActivity {
     ProgressBar mProgressBar;
     @BindView(R.id.search_bar)
     SearchView mSearchView;
+    @BindView(R.id.next)
+    Button mNext;
+    @BindView(R.id.previous)
+    Button mPrev;
 
     // Array listar
     ArrayList<Matches> recipeList = new ArrayList<>();
@@ -154,6 +158,37 @@ public class SearchActivity extends AppCompatActivity {
                 Intent intent = new Intent(SearchActivity.this, AboutActivity.class);
                 intent.putExtra("recipId", selectedItem);
                 startActivity(intent);
+            }
+        });
+
+        mNext.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                int temp = Integer.parseInt(resultStart);
+
+                try {
+                    temp += 10;
+                    resultStart = "" + temp;
+                    getRecipes();
+                } catch (UnsupportedEncodingException e) {
+                    e.printStackTrace();
+                }
+            }
+        });
+
+        mPrev.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                int temp = Integer.parseInt(resultStart);
+                if (temp >= 10) {
+                    try {
+                        temp -= 10;
+                        resultStart = ""+temp;
+                        getRecipes();
+                    } catch (UnsupportedEncodingException e) {
+                        e.printStackTrace();
+                    }
+                }
             }
         });
     }

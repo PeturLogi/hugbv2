@@ -2,7 +2,6 @@ package is.hi.recipeapp.hugbv2;
 
 import android.content.Context;
 import android.content.Intent;
-import android.media.Image;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.support.v7.app.AppCompatActivity;
@@ -18,19 +17,16 @@ import android.widget.Toast;
 import com.squareup.picasso.Picasso;
 
 import butterknife.ButterKnife;
-import is.hi.recipeapp.hugbv2.R;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.IOException;
-import java.io.UnsupportedEncodingException;
 
 import butterknife.BindView;
-import is.hi.recipeapp.hugbv2.model.Nutrition;
 import is.hi.recipeapp.hugbv2.model.Recipe;
-import is.hi.recipeapp.hugbv2.model.SousChefRepository;
+import is.hi.recipeapp.hugbv2.repository.SousChefRepository;
 import is.hi.recipeapp.hugbv2.ui.AlertDialogFragment;
 import okhttp3.Call;
 import okhttp3.Callback;
@@ -137,7 +133,7 @@ public class AboutActivity extends AppCompatActivity {
                     } catch (IOException e) {
                         Log.e(TAG, "Exception caught: ", e);
                     } catch (JSONException e) {
-                        Log.e(TAG, "JSON caught");
+                        Log.e(TAG, "JSON caught", e);
                     }
                 }
             });
@@ -240,9 +236,9 @@ public class AboutActivity extends AppCompatActivity {
             JSONObject attributes = recipeData.getJSONObject("attributes");
             if (attributes.has("cuisine")) {
                 JSONArray cuisine = attributes.getJSONArray("cuisine");
-                String[] cuis = new String[attributes.length()];
+                String[] cuis = new String[cuisine.length()];
 
-                for (int i = 0; i < attributes.length(); i++) {
+                for (int i = 0; i < cuisine.length(); i++) {
                     cuis[i] = cuisine.getString(i);
                 }
 
