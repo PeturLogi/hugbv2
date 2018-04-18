@@ -1,7 +1,9 @@
 package is.hi.recipeapp.hugbv2;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.support.v7.app.AppCompatActivity;
@@ -25,6 +27,11 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
+import java.util.HashSet;
+import java.util.Set;
 
 import butterknife.BindView;
 import is.hi.recipeapp.hugbv2.model.Recipe;
@@ -63,6 +70,9 @@ public class AboutActivity extends AppCompatActivity {
     TextView mRating;
 
 
+    private ArrayList<String> shoppingList;
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -84,6 +94,37 @@ public class AboutActivity extends AppCompatActivity {
                 Toast.makeText(getApplicationContext(), "Added to Favorites!", Toast.LENGTH_SHORT).show();
             }
         });
+
+        mAddIngred.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                shoppingList = getShoppingList(getApplicationContext());
+
+                for (String ingred : mRecipe.getIngredientLines()) {
+                    shoppingList.add(ingred);
+                    Collections.sort(shoppingList);
+                    storeShoppingList(shoppingList, getApplicationContext());
+                }
+                Toast.makeText(getApplicationContext(),"Ingredients added to shopping list", Toast.LENGTH_LONG).show();
+            }
+        });
+    }
+
+    private void storeShoppingList(ArrayList<String> shoppingList, Context applicationContext) {
+        Set<String> toWrite = new HashSet<String>(shoppingList);
+        SharedPreferences WordSearchPutPrefs = applicationContext.getSharedPreferences("dbArrayValues",
+                Activity.MODE_PRIVATE);
+        SharedPreferences.Editor prefEditor = WordSearchPutPrefs.edit();
+        prefEditor.putStringSet("myArray", toWrite);
+        prefEditor.commit();
+    }
+
+    private ArrayList<String> getShoppingList(Context applicationContext) {
+        SharedPreferences WordSearchGetPrefs = applicationContext.getSharedPreferences("dbArrayValues",
+                Activity.MODE_PRIVATE);
+        Set<String> tempSet = new HashSet<String>();
+        tempSet = WordSearchGetPrefs.getStringSet("myArray", tempSet);
+        return new ArrayList<String>(tempSet);
     }
 
     private void getRecipe() {
@@ -184,36 +225,6 @@ public class AboutActivity extends AppCompatActivity {
             recip.setIngredientLines(temp);
         }
 
-        /*
-        if (recipeData.has("nutritionEstimates")) {
-            JSONArray nutritionEstimates = recipeData.getJSONArray("nutritionEstimates");
-
-            Nutrition[] nutritions = new Nutrition[nutritionEstimates.length()];
-
-            for (int i = 0; i < nutritionEstimates.length(); i++) {
-                Nutrition item = new Nutrition();
-
-                JSONObject nutrient = nutritionEstimates.getJSONObject(i);
-                item.setAttribute(nutrient.getString("attribute"));
-
-                item.setDesctiption(nutrient.getString("desctiption"));
-
-                item.setValue(nutrient.getDouble("value"));
-
-                JSONObject unit = nutrient.getJSONObject("unit");
-                String[] unitValues = new String[4];
-                unitValues[0] = unit.getString("name");
-                unitValues[1] = unit.getString("abbreviation");
-                unitValues[2] = unit.getString("plural");
-                unitValues[3] = unit.getString("pluralAbbreviation");
-                item.setUnit(unitValues);
-
-                nutritions[i] = item;
-            }
-            recip.setNutrition(nutritions);
-        }
-
-        */
         if (recipeData.has("images")) {
             JSONArray images = recipeData.getJSONArray("images");
             JSONObject largeUrl = images.getJSONObject(0);

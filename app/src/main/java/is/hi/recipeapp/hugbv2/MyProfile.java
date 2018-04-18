@@ -4,8 +4,12 @@ import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.CardView;
+import android.util.Log;
 import android.view.View;
+import android.widget.TextView;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
 import is.hi.recipeapp.hugbv2.ui.MyFavoriteRecipe;
 import is.hi.recipeapp.hugbv2.ui.MyShoppingList;
 import is.hi.recipeapp.hugbv2.ui.MyWeekMenu;
@@ -21,10 +25,16 @@ import is.hi.recipeapp.hugbv2.ui.MyWeekMenu;
 
 public class MyProfile extends AppCompatActivity {
 
+    @BindView(R.id.currentUser)
+    TextView mAccountName;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_my_profile2);
+        ButterKnife.bind(this);
+
+        mAccountName.setText(LoginActivity.getAccountService().getCurrentAccount().getName());
 
         //virkjar klasann MyShoppingList
         CardView cardView = (CardView) findViewById(R.id.shoppinglist);
@@ -56,5 +66,14 @@ public class MyProfile extends AppCompatActivity {
             }
         });
 
+        CardView cardView4 = (CardView) findViewById(R.id.log_out);
+        cardView4.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                LoginActivity.getAccountService().logout();
+                Intent intent = new Intent(MyProfile.this, LoginActivity.class);
+                startActivity(intent);
+            }
+        });
     }
 }
