@@ -8,6 +8,7 @@ import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.text.method.LinkMovementMethod;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -25,6 +26,7 @@ import butterknife.ButterKnife;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
+import org.w3c.dom.Text;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -68,6 +70,8 @@ public class AboutActivity extends AppCompatActivity {
     Button mAddIngred;
     @BindView(R.id.rating)
     TextView mRating;
+    @BindView(R.id.source_url)
+    TextView mSource;
 
 
     private ArrayList<String> shoppingList;
@@ -198,15 +202,16 @@ public class AboutActivity extends AppCompatActivity {
         }
         mIngredLines.setText(text);
         text = "";
-        //if (cusines[0] != null) {
-        //    for (String line : cusines) {
-        //        text += line + "\n\n";
-        //    }
-        //}
+        if (cusines != null) {
+            for (String line : cusines) {
+                text += line + "\n\n";
+            }
+        }
 
         mCusine.setText(text);
-        mTimeSec.setText("Time in seconds:" + mRecipe.getTotalTime());
-        mRating.setText("Yummli rating: " + mRecipe.getRating() + " out of 5\n");
+        mTimeSec.setText("Prep and Cooking time: " + mRecipe.getTotalTime());
+        mRating.setText("Yummli rating: " + mRecipe.getRating() + " out of 5\n\n\n");
+        mSource.setText("Click link for Instructions: " + mRecipe.getSourceUrl());
 
 
     }
@@ -232,6 +237,11 @@ public class AboutActivity extends AppCompatActivity {
             String image = largeUrl.getString("hostedLargeUrl");
 
             recip.setImage(image);
+        }
+
+        if (recipeData.has("source")) {
+            JSONObject source = recipeData.getJSONObject("source");
+            recip.setSourceUrl(source.getString("sourceRecipeUrl"));
         }
 
         if (recipeData.has("name")) {
