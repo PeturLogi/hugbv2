@@ -19,62 +19,76 @@
 
             <SearchView
                 android:id="@+id/search_bar"
+                android:queryHint="Search for recipes"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent">
 
             </SearchView>
 
             <LinearLayout
-                android:id="@+id/checkboxes"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_below="@+id/search_bar"
-                android:orientation="vertical">
+                android:orientation="horizontal">
 
-                <CheckBox
-                    android:id="@+id/checkBoxPasta"
-                    android:layout_width="match_parent"
+                <Button
+                    android:id="@+id/select_ingred"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_alignParentEnd="true"
-                    android:layout_below="@+id/search_bar"
-                    android:layout_marginEnd="14dp"
-                    android:layout_marginTop="21dp"
-                    android:text="Pasta" />
+                    android:layout_weight="1"
+                    android:text="Select Ingredients" />
 
-                <CheckBox
-                    android:id="@+id/checkBoxHam"
-                    android:layout_width="match_parent"
+                <Button
+                    android:id="@+id/select_allergies"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_alignStart="@+id/checkBoxCheese"
-                    android:layout_below="@+id/checkBoxCheese"
-                    android:layout_marginTop="0dp"
-                    android:text="Ham" />
+                    android:layout_weight="1"
+                    android:text="Select Allergies" />
 
-                <CheckBox
-                    android:id="@+id/checkBoxCheese"
-                    android:layout_width="match_parent"
+                <Button
+                    android:id="@+id/select_diet"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_alignParentStart="true"
-                    android:layout_alignParentTop="true"
-                    android:layout_marginTop="0dp"
-                    android:text="Cheese" />
-
+                    android:layout_weight="1"
+                    android:text="Select Diet" />
             </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="horizontal">
+
+                <Button
+                    android:id="@+id/select_course"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="Select Course" />
+
+                <Button
+                    android:id="@+id/select_max_time"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="Maximum Time in Minutes" />
+            </LinearLayout>
+
+            <ProgressBar
+                android:id="@+id/progressBar"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/showRecipe"
+                android:layout_gravity="center_horizontal" />
+
             <Button
                 android:id="@+id/showRecipe"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/checkboxes"
                 android:layout_gravity="center_horizontal"
+                android:layout_weight="1"
                 android:text="Search"
                 tools:layout_editor_absoluteX="127dp"
                 tools:layout_editor_absoluteY="202dp" />
-            <ProgressBar
-                android:id="@+id/progressBar"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_below="@+id/showRecipe"
-                android:layout_gravity="center_horizontal"/>
 
             <ListView
                 android:id="@+id/listView"

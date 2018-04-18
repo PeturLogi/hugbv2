@@ -1,10 +1,12 @@
 package is.hi.recipeapp.hugbv2;
 
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.support.v4.view.GestureDetectorCompat;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -77,12 +79,6 @@ public class SearchActivity extends AppCompatActivity {
 
     @BindView(R.id.showRecipe)
     Button mShowRecipe;
-    @BindView(R.id.checkBoxCheese)
-    CheckBox mCheckBoxCheese;
-    @BindView(R.id.checkBoxHam)
-    CheckBox mCheckBoxHam;
-    @BindView(R.id.checkBoxPasta)
-    CheckBox mCheckBoxPasta;
     @BindView(R.id.listView)
     ListView mListView;
     @BindView(R.id.progressBar)
@@ -93,10 +89,54 @@ public class SearchActivity extends AppCompatActivity {
     Button mNext;
     @BindView(R.id.previous)
     Button mPrev;
+    @BindView(R.id.select_ingred)
+    Button selectIngredButton;
+    @BindView(R.id.select_allergies)
+    Button selectAllergiesButton;
+    @BindView(R.id.select_diet)
+    Button selectDietButton;
+    @BindView(R.id.select_course)
+    Button selectCourseButton;
+    @BindView(R.id.select_max_time)
+    Button selectMaxTimeButton;
 
     // Array listar
-    ArrayList<Matches> recipeList = new ArrayList<>();
+    protected ArrayList<Matches> recipeList = new ArrayList<>();
 
+    // ArrayLists for ingredient checkboxes
+    protected ArrayList<String> selectedIngredients = new ArrayList<>();
+    // String array for ingredient checkboxes
+    protected String[] selectableIngredients = {"shrimp", "chicken", "turkey", "beef", "lamb", "ham",
+            "fish", "lobster", "pork", "pasta", "cheese", "eggs", "rice", "tomatoes", "onion",
+            "black beans", "mayonnaise", "yogurt", "potatoes", "spinach", "mushrooms"};
+
+    //ArrayLists for Allergy checkboxes
+    protected ArrayList<String> selectedAllergies = new ArrayList<>();
+    // String array for allergy checkboxes
+    protected String[] selectableAllergies = {"Gluten-Free", "Peanut-Free","Dairy-Free",
+            "Seafood-Free", "Sesame-Free", "Soy-Free", "Egg-Free", "Sulfite-Free",
+            "Tree Nut-Free", "Wheat-Free"};
+
+    //ArrayLists for Diet checkboxes
+    protected ArrayList<String> selectedDiets = new ArrayList<>();
+    // String array for Diet checkboxes
+    protected String[] selectableDiets = {"Lacto vegetarian", "Ovo vegetarian", "Pescetarian",
+            "Vegan", "Lacto-ovo vegetarian", "Paleo"};
+
+    //ArrayLists for Course checkboxes
+    protected ArrayList<String> selectedCourses = new ArrayList<>();
+    // String array for Course checkboxes
+    protected String[] selectableCourses = {"Main Dishes", "Desserts", "Side Dishes",
+            "Appetizers", "Salads", "Breakfast and Brunch", "Breads", "Soups", "Beverages",
+            "Condiments and Sauces", "Cocktails", "Snacks", "Lunch"};
+
+    //ArrayLists for Max Time checkboxes
+    protected int selectedMaxTime = -1;
+    // String array for Max Time checkboxes
+    //protected int[] selectableMaxTime = {15, 30, 45, 60, 75, 90, 105, 120};
+    protected String[] selectableMaxTime = {"Unlimited", "15", "30", "45", "60", "75", "90", "105", "120"};
+
+    protected int mSelected = -1;
 
     /**
      * smiðurinn birtir viðmótið activity_search.xml og virkjar upphafs aðferðir
@@ -113,6 +153,7 @@ public class SearchActivity extends AppCompatActivity {
         this.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
 
         mProgressBar.setVisibility(View.INVISIBLE);
+        mSearchView.setIconified(false);
 
         //search barinn
         SearchView.OnQueryTextListener queryTextListener = new SearchView.OnQueryTextListener() {
@@ -161,6 +202,7 @@ public class SearchActivity extends AppCompatActivity {
             }
         });
 
+        // Flettir leitarniðurstöðum um 10 niðurstöður
         mNext.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -176,6 +218,7 @@ public class SearchActivity extends AppCompatActivity {
             }
         });
 
+        // Flettir leitarniðurstöðum til baka um 10 niðurstður
         mPrev.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -191,8 +234,55 @@ public class SearchActivity extends AppCompatActivity {
                 }
             }
         });
-    }
 
+        // Virkjar Select Ingredient takkan og birtir dialog með checkboxum
+        selectIngredButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (view.getId() == R.id.select_ingred) {
+                    showSelectIngredientDialog();
+                }
+            }
+        });
+
+        // Virkjar Select Allergies takkan og birtir dialog með checkboxum
+        selectAllergiesButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (view.getId() == R.id.select_allergies) {
+                    showSelectAllergiesDialog();
+                }
+            }
+        });
+
+        // Virkjar Select Diet takkan og birtir dialog með checkboxum
+        selectDietButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (view.getId() == R.id.select_diet) {
+                    showSelectDietDialog();
+                }
+            }
+        });
+
+        selectCourseButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (view.getId() == R.id.select_course) {
+                    showSelectCourseDialog();
+                }
+            }
+        });
+
+        selectMaxTimeButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (view.getId() == R.id.select_max_time) {
+                    showSelectMaxTime();
+                }
+            }
+        });
+    }
 
     /**
      *Tenging við API og sækir það sem við leitum af.
@@ -213,22 +303,25 @@ public class SearchActivity extends AppCompatActivity {
 
         searchUrl += ("&requirePictures=true&maxResult=10&start=" + resultStart);
 
-        ArrayList<String> chosenIngred = new ArrayList<>();
-
-        //checkboxin fyrir pasta, chese og ham
-
-        if (mCheckBoxPasta.isChecked()) {
-            chosenIngred.add("pasta");
-        }
-        if (mCheckBoxCheese.isChecked()) {
-            chosenIngred.add("cheese");
-        }
-        if (mCheckBoxHam.isChecked()) {
-            chosenIngred.add("ham");
+        // Bætum völdum hraefnum við leitina
+        for (String ingred : selectedIngredients) {
+            searchUrl += "&allowedIngredient[]=" + ingred;
         }
 
-        for (String item : chosenIngred) {
-            searchUrl += "&allowedIngredient[]=" + item;
+        for (String allergy : selectedAllergies) {
+            searchUrl += "&allowedAllergy[]=" + allergy;
+        }
+
+        for (String diet : selectedDiets) {
+            searchUrl += "&allowedDiet[]=" + diet;
+        }
+
+        for (String course : selectedCourses) {
+            searchUrl += "&allowedCourse[]=" + course;
+        }
+
+        if (selectedMaxTime != -1) {
+            searchUrl += "&maxTotalTimeInSeconds=" + (60 * selectedMaxTime);
         }
 
 
@@ -547,6 +640,239 @@ public class SearchActivity extends AppCompatActivity {
     private void alertUserAboutError() {
         AlertDialogFragment dialog = new AlertDialogFragment();
         dialog.show(getFragmentManager(), "error_dialog");
+    }
+
+    /**
+     * Birtir Dialog með checkboxum fyrir hraefni
+     */
+    protected void showSelectIngredientDialog() {
+        boolean[] checkedIngredients = new boolean[selectableIngredients.length];
+
+        int count = selectableIngredients.length;
+
+        for (int i = 0; i < count; i++) {
+            checkedIngredients[i] = selectedIngredients.contains(selectableIngredients[i]);
+        }
+
+        DialogInterface.OnMultiChoiceClickListener ingredientDialogListener = new DialogInterface.OnMultiChoiceClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which, boolean isChecked) {
+                if (isChecked) {
+                    selectedIngredients.add(selectableIngredients[which]);
+                } else {
+                    selectedIngredients.remove(selectableIngredients[which]);
+                }
+            }
+        };
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setTitle("Select Ingredients");
+        builder.setMultiChoiceItems(selectableIngredients, checkedIngredients, ingredientDialogListener);
+        AlertDialog dialog = builder.create();
+        dialog.show();
+    }
+
+
+    /**
+     * Birtir Dialog með checkboxum fyrir ofnaemi
+     */
+    private void showSelectAllergiesDialog() {
+        boolean[] checkedAllergies = new boolean[selectableAllergies.length];
+
+        int count = selectableAllergies.length;
+
+        for (int i = 0; i < count; i++) {
+            boolean token = false;
+            for (String s : selectedAllergies) {
+                if (s.endsWith(selectableAllergies[i])) {
+                    token = true;
+                    break;
+                }
+            }
+
+            checkedAllergies[i] = token;
+        }
+
+        DialogInterface.OnMultiChoiceClickListener allergyDialogListener = new DialogInterface.OnMultiChoiceClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which, boolean isChecked) {
+                String append = "";
+                switch (which) {
+                    case 0:     append = "393^";
+                                break;
+                    case 1:     append = "394^";
+                                break;
+                    case 2:     append = "396^";
+                                break;
+                    case 3:     append = "398^";
+                                break;
+                    case 4:     append = "399^";
+                                break;
+                    case 5:     append = "400^";
+                                break;
+                    case 6:     append = "397^";
+                                break;
+                    case 7:     append = "401^";
+                                break;
+                    case 8:     append = "395^";
+                                break;
+                    case 9:     append = "392^";
+                                break;
+                    default:    break;
+                }
+
+                if (isChecked) {
+                    selectedAllergies.add(append + selectableAllergies[which]);
+                } else {
+                    selectedAllergies.remove(append + selectableAllergies[which]);
+                }
+
+                System.out.println(append + selectableAllergies[which]);
+            }
+        };
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setTitle("Select Allergies");
+        builder.setMultiChoiceItems(selectableAllergies, checkedAllergies, allergyDialogListener);
+        AlertDialog dialog = builder.create();
+        dialog.show();
+    }
+
+    /**
+     * Birtir Dialog með checkboxum fyrir mataræði
+     */
+    private void showSelectDietDialog() {
+        boolean[] checkedDiets = new boolean[selectableDiets.length];
+
+        int count = selectableDiets.length;
+
+        for (int i = 0; i < count; i++) {
+            boolean token = false;
+            for (String s : selectedDiets) {
+                if (s.endsWith(selectableDiets[i])) {
+                    token = true;
+                    break;
+                }
+            }
+
+            checkedDiets[i] = token;
+        }
+
+        DialogInterface.OnMultiChoiceClickListener dietDialogListener = new DialogInterface.OnMultiChoiceClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which, boolean isChecked) {
+                String append = "";
+                switch (which) {
+                    case 0:     append = "388^";
+                                break;
+                    case 1:     append = "389^";
+                                break;
+                    case 2:     append = "390^";
+                                break;
+                    case 3:     append = "386^";
+                                break;
+                    case 4:     append = "387^";
+                                break;
+                    case 5:     append = "403^";
+                                break;
+                    default:    break;
+                }
+
+
+                if (isChecked) {
+                    selectedDiets.add(append + selectableDiets[which]);
+                } else {
+                    selectedDiets.remove(append + selectableDiets[which]);
+                }
+            }
+        };
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setTitle("Select Diet");
+        builder.setMultiChoiceItems(selectableDiets, checkedDiets, dietDialogListener);
+        AlertDialog dialog = builder.create();
+        dialog.show();
+    }
+
+    private void showSelectCourseDialog() {
+        boolean[] checkedCourses = new boolean[selectableCourses.length];
+
+        int count = selectableCourses.length;
+
+        for (int i = 0; i < count; i++) {
+            boolean token = false;
+            for (String s : selectedCourses) {
+                if (s.endsWith(selectableCourses[i])) {
+                    token = true;
+                    break;
+                }
+            }
+
+            checkedCourses[i] = token;
+        }
+
+        DialogInterface.OnMultiChoiceClickListener courseDialogListener = new DialogInterface.OnMultiChoiceClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which, boolean isChecked) {
+                String append = "course^course-";
+
+
+                if (isChecked) {
+                    selectedCourses.add(append + selectableCourses[which]);
+                } else {
+                    selectedCourses.remove(append + selectableCourses[which]);
+                }
+            }
+        };
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setTitle("Select Courses");
+        builder.setMultiChoiceItems(selectableCourses, checkedCourses, courseDialogListener);
+        AlertDialog dialog = builder.create();
+        dialog.show();
+    }
+
+    private void showSelectMaxTime() {
+
+        final AlertDialog.Builder build = new AlertDialog.Builder(this);
+        build.setTitle("Select Max Time in Minutes");
+        build.setCancelable(true);
+        final DialogInterface.OnMultiChoiceClickListener onClick =
+                new DialogInterface.OnMultiChoiceClickListener() {
+                    @Override public void onClick(final DialogInterface dialog,
+                                                  final int which, final boolean isChecked) {
+
+                        if (isChecked) {
+                            if ((mSelected != -1) && (mSelected != which)) {
+                                final int oldVal = mSelected;
+                                final AlertDialog alert = (AlertDialog)dialog;
+                                final ListView list = alert.getListView();
+                                list.setItemChecked(oldVal, false);
+                            }
+                            mSelected = which;
+                        } else {
+                            mSelected = -1;
+                        }
+                        if (mSelected > 0){
+                            selectedMaxTime = Integer.parseInt(selectableMaxTime[mSelected]);
+                        } else {
+                            selectedMaxTime = -1;
+                        }
+                        onChangeMaxTime();
+                    }
+                };
+
+        build.setMultiChoiceItems(selectableMaxTime, null, onClick);
+        AlertDialog dialog = build.create();
+        dialog.show();
+    }
+
+    private void onChangeMaxTime() {
+        StringBuilder stringBuilder = new StringBuilder();
+
+        if (selectedMaxTime < 0) {
+            stringBuilder.append("Unlimited");
+        } else {
+            stringBuilder.append(selectedMaxTime);
+        }
+
+        selectMaxTimeButton.setText(stringBuilder.toString());
     }
 }
 
