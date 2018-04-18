@@ -1,13 +1,17 @@
 package is.hi.recipeapp.hugbv2.ui;
 
 import android.content.Context;
+import android.content.DialogInterface;
+import android.content.Intent;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.view.WindowManager;
+import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.ProgressBar;
 import android.widget.Toast;
@@ -22,6 +26,7 @@ import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import is.hi.recipeapp.hugbv2.AboutActivity;
 import is.hi.recipeapp.hugbv2.R;
 import is.hi.recipeapp.hugbv2.model.Attribution;
 import is.hi.recipeapp.hugbv2.model.CustomListAdapter;
@@ -42,6 +47,8 @@ public class MyFavoriteRecipe extends AppCompatActivity {
     private RecipeData mRecipe;
     private Matches[] mMatches;
     private CustomListAdapter adapter;
+
+    private int mNrHolder = -1;
 
     @BindView(R.id.listViewFav)
     ListView mListViewFav;
@@ -68,6 +75,38 @@ public class MyFavoriteRecipe extends AppCompatActivity {
         }
 
         setDisplay();
+
+        mListViewFav.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                String selectedItem = favRecipList.get(i).getId();
+
+                alertWindow(selectedItem, i);
+            }
+        });
+    }
+
+    private void alertWindow(final String selectedItem, final int position) {
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setTitle("Inspect or Remove " + favRecipList.get(position).getRecipeName() + "?");
+        builder.setPositiveButton("Inspect", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+                Intent intent = new Intent(MyFavoriteRecipe.this, AboutActivity.class);
+                intent.putExtra("recipId", selectedItem);
+                startActivity(intent);
+            }
+        });
+        builder.setNegativeButton("Remove", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int which) {
+                favRecipList.remove(position);
+                SousChefRepository.get(MyFavoriteRecipe.this).removeRecipe(selectedItem);
+                mListViewFav.setAdapter(adapter);
+                setDisplay();
+            }
+        });
+        builder.show();
     }
 
     public void displayFavorites(int nr) {
@@ -75,6 +114,8 @@ public class MyFavoriteRecipe extends AppCompatActivity {
         String apiId = "c94137d2";
         String getUrl = "http://api.yummly.com/v1/api/recipe/" + recipId.get(nr) + "?_app_id=" +
                 apiId + "&_app_key=" + apiKey;
+
+        mNrHolder = nr;
 
         if (isNeworkAvailable()) {
             toggleRefresh();
@@ -107,6 +148,7 @@ public class MyFavoriteRecipe extends AppCompatActivity {
                         Log.v(TAG, jsonData);
                         if (response.isSuccessful()) {
                             Matches temp = parseRecipe(jsonData);
+                            temp.setId(recipId.get(mNrHolder));
                             favRecipList.add(temp);
 
                             runOnUiThread(new Runnable() {
