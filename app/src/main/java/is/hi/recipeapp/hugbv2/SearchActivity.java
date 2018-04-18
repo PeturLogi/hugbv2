@@ -45,11 +45,13 @@ import okhttp3.Response;
 
 import android.widget.ProgressBar;
 import android.widget.SearchView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
+import org.w3c.dom.Text;
 
 
 /**
@@ -99,6 +101,10 @@ public class SearchActivity extends AppCompatActivity {
     Button selectCourseButton;
     @BindView(R.id.select_max_time)
     Button selectMaxTimeButton;
+    @BindView(R.id.yummly_text)
+    TextView mAttributionText;
+    @BindView(R.id.yummly_url)
+    TextView mAttributionUrl;
 
     // Array listar
     protected ArrayList<Matches> recipeList = new ArrayList<>();
@@ -403,6 +409,10 @@ public class SearchActivity extends AppCompatActivity {
     private void updateDisplay() {
         Attribution attribution = mData.getAttribution();
         Matches[] recipes = mData.getMatches();
+
+        mAttributionText.setText(attribution.getText());
+        mAttributionUrl.setText(attribution.getUrl());
+
 
         adapter = new CustomListAdapter(this, recipeList);
 

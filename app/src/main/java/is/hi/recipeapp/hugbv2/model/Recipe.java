@@ -14,6 +14,7 @@ public class Recipe {
     String[] cuisine;
     double rating;
     String numberOfServings;
+    String sourceUrl;
 
 
     public String[] getIngredientLines() {
@@ -86,5 +87,13 @@ public class Recipe {
 
     public void setNumberOfServings(String numberOfServings) {
         this.numberOfServings = numberOfServings;
+    }
+
+    public String getSourceUrl() {
+        return sourceUrl;
+    }
+
+    public void setSourceUrl(String sourceUrl) {
+        this.sourceUrl = sourceUrl;
     }
 }
