@@ -5,6 +5,7 @@ import android.content.Context;
 import android.net.ConnectivityManager;
 import android.net.Credentials;
 import android.net.NetworkInfo;
+import android.nfc.Tag;
 import android.util.Log;
 import android.widget.Toast;
 
@@ -55,6 +56,8 @@ public class AccountService  implements Serializable {
     OkHttpClient client;
     // Gson hlutur sem vinnur med JSON gögn
     Gson gson = new Gson();
+
+    String mCurrentUser = "";
 
     public AccountService() {
         client = new OkHttpClient();
@@ -114,6 +117,7 @@ public class AccountService  implements Serializable {
      */
     public void login (Account account) {
         mCurrentAcc = account;
+        Log.e(TAG, account.toString());
     }
 
     public void logout() {
@@ -241,5 +245,7 @@ public class AccountService  implements Serializable {
     }
 
 
-
+    public Account getCurrentAccount() {
+        return mCurrentAcc;
+    }
 }
